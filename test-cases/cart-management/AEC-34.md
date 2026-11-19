@@ -35,4 +35,6 @@ No Test-to-Test-Set membership relationship is present in the export. Membership
 
 ## Automation status
 
-Not implemented. See [candidate mapping](../../automation/feature-mapping.md); candidacy and readiness are provisional.
+Implemented as a scoped scenario in [cart-updates.feature](../../automation/features/cart-updates.feature), based on the Test title. Local fixture only; application execution and original Xray steps remain unverified.
+
+The Test title expects quantity zero to remove an item, while linked Story AEC-10 specifies a minimum quantity of 1. Clarify the intended rule before treating either as authoritative.

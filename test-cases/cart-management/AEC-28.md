@@ -35,4 +35,4 @@ No Test-to-Test-Set membership relationship is present in the export. Membership
 
 ## Automation status
 
-Not implemented. See [candidate mapping](../../automation/feature-mapping.md); candidacy and readiness are provisional.
+Partially implemented in [cart-updates.feature](../../automation/features/cart-updates.feature) for one configured product from its details page. Local fixture only; application execution and original Xray steps remain unverified.

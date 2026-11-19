@@ -6,7 +6,7 @@ This repository contains the QA documentation and future automation planning for
 
 AskOmDch supports online product discovery, cart management, account management, and checkout. The application URL recorded in Jira Test Plan AEC-140 is [https://askomdch.com/](https://askomdch.com/).
 
-The QA scope is limited to the four Jira Epics: Account Management (AEC-1), Browsing Products (AEC-2), Cart Management (AEC-3), and Checkout (AEC-4). The repository documents the requirements and existing test inventory; it does not claim that the website or any test has been executed.
+The QA scope is limited to the four Jira Epics: Account Management (AEC-1), Browsing Products (AEC-2), Cart Management (AEC-3), and Checkout (AEC-4). The repository documents the requirements and existing test inventory. Limited read-only site checks are recorded in [execution summaries](test-reports/execution-summaries/); they do not establish complete Xray Test results.
 
 ## QA objectives
 
@@ -29,8 +29,8 @@ Jira/Xray and manual testing through a web browser are named in AEC-140. The ini
 | `test-cases/` | The 63 existing Jira Test issues, Precondition catalog, and Test Set catalog |
 | `test-data/` | Proposed, synthetic scenario data and its verification notes |
 | `test-executions/` | The four existing Jira Test Executions; no fabricated outcomes |
-| `test-reports/` | Future locations and guidance for QA reports |
-| `automation/` | Initial read-only Cucumber/Selenium checks and Jira-Test-to-candidate mapping |
+| `test-reports/` | Evidence-based QA reports and reporting guidance |
+| `automation/` | Cucumber/Selenium checks and Jira-Test-to-candidate mapping |
 | `source-exports/` | Local raw exports; intentionally excluded from Git |
 
 ## Getting started

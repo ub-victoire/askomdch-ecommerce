@@ -31,6 +31,17 @@ public class StoreSteps {
         browser.driver().get(TestConfig.baseUrl().resolve("/store/").toString());
     }
 
+    @When("the customer opens the {string} header category")
+    public void openHeaderCategory(String category) {
+        new CatalogPage(browser.driver()).openHeaderCategory(category);
+    }
+
+    @Then("the category page heading is {string}")
+    public void categoryPageHeading(String expected) {
+        assertEquals("The category heading must match the selected category.",
+                expected, new CatalogPage(browser.driver()).categoryHeading());
+    }
+
     @Given("the customer has a fresh browser session")
     public void freshBrowserSession() {
         assertTrue("Expected a fresh browser session with no cookies.",
