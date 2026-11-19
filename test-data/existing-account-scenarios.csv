@@ -1,0 +1,7 @@
+scenario_id,jira_test,scenario,synthetic_data_reference,source,verification_status
+AEC149-EX-01,AEC-149,Checkout account creation using an already registered billing email,registered_billing_email_alias; existing_account_fixture,AEC-20 acceptance criteria,proposed-unverified
+AEC42-EX-01,AEC-42,Registration using an existing username,registered_username_alias,AEC-42 Jira description,proposed-unverified
+AEC51-EX-01,AEC-51,Registration using an existing email,registered_email_alias,AEC-51 Jira description,proposed-unverified
+AEC124-EX-01,AEC-124,Password reset requested using a registered username,registered_username_alias; controlled_mailbox_alias,AEC-124 Jira description,proposed-unverified
+AEC125-EX-01,AEC-125,Password reset requested using a registered email,registered_email_alias; controlled_mailbox_alias,AEC-125 Jira description,proposed-unverified
+AEC131-EX-01,AEC-131,Use an existing account's reset-link workflow,registered_account_alias; controlled_mailbox_alias,AEC-131 Jira description,proposed-unverified
