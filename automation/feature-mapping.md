@@ -2,11 +2,11 @@
 
 This map distinguishes implemented checks from future candidates; it is not evidence that the application passed a Test. Jira Test keys are preserved as tags such as `@AEC-48`. Candidate grouping follows exported Test-to-Story links; no Story is inferred for an unlinked Test.
 
-**Implementation update:** AEC-48, AEC-89 and AEC-123 have read-only Cucumber/Selenium implementations, validated against a local fixture only. Their product results are unverified. The other 60 Tests remain candidates and require further specification, environment or fixture review; the rows below do not claim implementation.
+**Implementation update:** AEC-18, AEC-48, AEC-89, AEC-110, AEC-112 and AEC-123 have read-only Cucumber/Selenium checks, validated against a local fixture only. AEC-18 uses the specific shirt examples from AEC-15, not every possible search input; AEC-110 checks one product from each entry point. Product results remain unverified. The other 57 Tests remain candidates and require further specification, environment or fixture review.
 
 | Jira Test | Existing summary | Exported Story link(s) | Candidate feature | Readiness / clarification |
 |---|---|---|---|---|
-| `AEC-18` | Customer to verify that product searching is displaying a matching products | AEC-15 — Product Searching | `browsing-products.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
+| `AEC-18` | Customer to verify that product searching is displaying a matching products | AEC-15 — Product Searching | `product-browsing.feature` | Shirt examples from AEC-15 implemented; local fixture only, product execution unverified. |
 | `AEC-28` | Add a product to Cart | AEC-7 — Add Product to Cart | `cart-management.feature` | Description missing; clarify objective, steps, expected result, and data. |
 | `AEC-32` | Update quantity recalculates totals | AEC-10 — Update Cart details | `cart-management.feature` | Description missing; clarify objective, steps, expected result, and data. |
 | `AEC-34` | Quantity 0 removes the item | AEC-10 — Update Cart details | `cart-management.feature` | Description missing; clarify objective, steps, expected result, and data. |
@@ -47,8 +47,8 @@ This map distinguishes implemented checks from future candidates; it is not evid
 | `AEC-105` | Verify lost-password navigation | AEC-17 — Return Customer Login During Checkout | `checkout.feature` | Description missing; clarify objective, steps, expected result, and data. |
 | `AEC-108` | Cart persistence after refresh | AEC-10 — Update Cart details, AEC-13 — View cart details | `cart-management.feature (cross-Story links)` | Description missing; clarify objective, steps, expected result, and data. |
 | `AEC-109` | Verify failed login keeps the customer on checkout | AEC-17 — Return Customer Login During Checkout | `checkout.feature` | Description missing; clarify objective, steps, expected result, and data. |
-| `AEC-110` | Customer to verify that opening product details opens the correct product details page | AEC-16 — View Product Details | `browsing-products.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
-| `AEC-112` | Display empty cart and return to shop | AEC-13 — View cart details | `cart-management.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
+| `AEC-110` | Customer to verify that opening product details opens the correct product details page | AEC-16 — View Product Details | `product-browsing.feature` | One product from catalogue and search results; local fixture only, product execution unverified. |
+| `AEC-112` | Display empty cart and return to shop | AEC-13 — View cart details | `cart.feature` | Empty-cart and return flow implemented; local fixture only, product execution unverified. |
 | `AEC-115` | Reject an invalid coupon | None exported | `unassigned-pending-traceability` | Description missing; clarify objective, steps, expected result, and data. |
 | `AEC-117` | Customer to verify the Validation Errors on Missing Mandatory Shipping Fields | AEC-21 — Alternative Shipping Address | `checkout.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
 | `AEC-118` | Customer to verify Boundary Value Validation on Maximum Field Lengths | AEC-21 — Alternative Shipping Address | `checkout.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |

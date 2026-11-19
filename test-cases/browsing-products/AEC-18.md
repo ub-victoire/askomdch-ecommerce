@@ -35,4 +35,4 @@ No Test-to-Test-Set membership relationship is present in the export. Membership
 
 ## Automation status
 
-Not implemented. See [candidate mapping](../../automation/feature-mapping.md); candidacy and readiness are provisional.
+Implemented for the three shirt-query examples in AEC-15 in [product-browsing.feature](../../automation/features/product-browsing.feature). Validated against a local fixture only; application execution and other search inputs are unverified.

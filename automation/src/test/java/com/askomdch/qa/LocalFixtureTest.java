@@ -19,11 +19,17 @@ public class LocalFixtureTest {
     private HttpServer server;
     private String previousBaseUrl;
     private volatile boolean showRecoveryInstruction;
+    private volatile boolean wrongSearchResults;
+    private volatile boolean wrongProductTitle;
+    private volatile boolean showCartContents;
 
     @Before
     public void startFixture() throws IOException {
         previousBaseUrl = System.getProperty("baseUrl");
         showRecoveryInstruction = true;
+        wrongSearchResults = false;
+        wrongProductTitle = false;
+        showCartContents = false;
         server = HttpServer.create(new InetSocketAddress("127.0.0.1", 0), 0);
         server.createContext("/account/", exchange -> {
             String html;
@@ -53,6 +59,52 @@ public class LocalFixtureTest {
                           <button name="register">Register</button>
                         </form>
                         """;
+            }
+            byte[] body = ("<!doctype html><html><body>" + html + "</body></html>")
+                    .getBytes(StandardCharsets.UTF_8);
+            exchange.getResponseHeaders().set("Content-Type", "text/html; charset=UTF-8");
+            exchange.sendResponseHeaders(200, body.length);
+            try (var output = exchange.getResponseBody()) {
+                output.write(body);
+            }
+        });
+        server.createContext("/", exchange -> {
+            String path = exchange.getRequestURI().getPath();
+            String html;
+            if (path.equals("/store/")) {
+                html = """
+                        <form class="woocommerce-product-search" action="/store/" method="get">
+                          <input type="search" name="s">
+                          <button type="submit">Search</button>
+                        </form>
+                        <ul class="products">
+                          <li class="product">
+                            <a class="woocommerce-LoopProduct-link" href="/product/blue-tshirt/">
+                              <h2 class="woocommerce-loop-product__title">Blue Tshirt</h2>
+                            </a>
+                          </li>
+                          %s
+                        </ul>
+                        """.formatted(wrongSearchResults ? "" : """
+                          <li class="product">
+                            <a class="woocommerce-LoopProduct-link" href="/product/green-tshirt/">
+                              <h2 class="woocommerce-loop-product__title">Green Tshirt</h2>
+                            </a>
+                          </li>
+                        """);
+            } else if (path.equals("/product/blue-tshirt/")) {
+                html = "<h1 class=\"product_title\">"
+                        + (wrongProductTitle ? "Incorrect product" : "Blue Tshirt") + "</h1>";
+            } else if (path.equals("/cart/")) {
+                html = """
+                        <p class="cart-empty">Your cart is currently empty.</p>
+                        <p class="return-to-shop"><a class="wc-backward" href="/store/">RETURN TO SHOP</a></p>
+                        %s
+                        """.formatted(showCartContents ? "<div class=\"cart_totals\">Unexpected totals</div>" : "");
+            } else {
+                exchange.sendResponseHeaders(404, -1);
+                exchange.close();
+                return;
             }
             byte[] body = ("<!doctype html><html><body>" + html + "</body></html>")
                     .getBytes(StandardCharsets.UTF_8);
@@ -97,11 +149,34 @@ public class LocalFixtureTest {
         }
     }
 
+    @Test
+    public void searchScenarioFailsWhenARequiredProductIsMissing() {
+        wrongSearchResults = true;
+        assertEquals(1, runCucumber("features/product-browsing.feature:15", "@AEC-18"));
+    }
+
+    @Test
+    public void productScenarioFailsForAnIncorrectDetailTitle() {
+        wrongProductTitle = true;
+        assertEquals(1, runCucumber("features/product-browsing.feature:21", "@AEC-110"));
+    }
+
+    @Test
+    public void emptyCartScenarioFailsWhenTotalsAreVisible() {
+        showCartContents = true;
+        assertEquals(1, runCucumber("features/cart.feature", "@AEC-112"));
+    }
+
     private byte runCucumber(String features) {
+        return runCucumber(features, "not @unused");
+    }
+
+    private byte runCucumber(String features, String tags) {
         return Main.run(new String[] {
                 "--glue", "com.askomdch.qa.hooks",
                 "--glue", "com.askomdch.qa.steps",
                 "--plugin", "summary",
+                "--tags", tags,
                 features
         }, Thread.currentThread().getContextClassLoader());
     }
