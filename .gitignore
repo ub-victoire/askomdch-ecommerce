@@ -11,3 +11,6 @@ source-exports/
 .DS_Store
 __pycache__/
 .pytest_cache/
+
+# Maven build output
+automation/target/

@@ -1,6 +1,8 @@
 # Jira Test to future automation candidate mapping
 
-This is a planning map only. It does not create Cucumber files, assert behavior, or claim automation readiness. Jira Test keys are preserved as candidate tags such as `@AEC-40`. Grouping follows exported Test-to-Story links; no Story is inferred for an unlinked Test.
+This map distinguishes implemented checks from future candidates; it is not evidence that the application passed a Test. Jira Test keys are preserved as tags such as `@AEC-48`. Candidate grouping follows exported Test-to-Story links; no Story is inferred for an unlinked Test.
+
+**Implementation update:** AEC-48, AEC-89 and AEC-123 have read-only Cucumber/Selenium implementations, validated against a local fixture only. Their product results are unverified. The other 60 Tests remain candidates and require further specification, environment or fixture review; the rows below do not claim implementation.
 
 | Jira Test | Existing summary | Exported Story link(s) | Candidate feature | Readiness / clarification |
 |---|---|---|---|---|
@@ -12,7 +14,7 @@ This is a planning map only. It does not create Cucumber files, assert behavior,
 | `AEC-42` | Registration for an existing username | AEC-5 — Registration | `account-management.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
 | `AEC-44` | Registration with a valid email address | AEC-5 — Registration | `account-management.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
 | `AEC-45` | Registration using an invalid email | AEC-5 — Registration | `account-management.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
-| `AEC-48` | Registration form shows all inputs and the Register button | AEC-5 — Registration | `account-management.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
+| `AEC-48` | Registration form shows all inputs and the Register button | AEC-5 — Registration | `account-forms.feature` | Implemented; local fixture only, product execution unverified. |
 | `AEC-49` | Registration with an empty email address field | AEC-5 — Registration | `account-management.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
 | `AEC-51` | Registration for an existing email | AEC-5 — Registration | `account-management.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
 | `AEC-54` | Registration using an empty password field | AEC-5 — Registration | `account-management.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
@@ -29,7 +31,7 @@ This is a planning map only. It does not create Cucumber files, assert behavior,
 | `AEC-82` | Verify incorrect password for a registered account | AEC-17 — Return Customer Login During Checkout | `checkout.feature` | Description missing; clarify objective, steps, expected result, and data. |
 | `AEC-85` | Remove one product from the cart | AEC-10 — Update Cart details | `cart-management.feature` | Description missing; clarify objective, steps, expected result, and data. |
 | `AEC-86` | Verify unregistered username and email errors | AEC-17 — Return Customer Login During Checkout | `checkout.feature` | Description missing; clarify objective, steps, expected result, and data. |
-| `AEC-89` | Login form shows all inputs, the Remember me checkbox and the LOG IN button | AEC-6 — Log In | `account-management.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
+| `AEC-89` | Login form shows all inputs, the Remember me checkbox and the LOG IN button | AEC-6 — Log In | `account-forms.feature` | Implemented; local fixture only, product execution unverified. |
 | `AEC-90` | Login with a registered username | AEC-6 — Log In | `account-management.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
 | `AEC-91` | Login with a registered email address | AEC-6 — Log In | `account-management.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
 | `AEC-93` | Login with the credentials having leading and trailing spaces | AEC-6 — Log In | `account-management.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
@@ -52,7 +54,7 @@ This is a planning map only. It does not create Cucumber files, assert behavior,
 | `AEC-118` | Customer to verify Boundary Value Validation on Maximum Field Lengths | AEC-21 — Alternative Shipping Address | `checkout.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
 | `AEC-119` | Customer to Verify Catalog Product Sorting Functionality | AEC-14 — Product Sorting | `browsing-products.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
 | `AEC-121` | System should reject Invalid Character Formats in Name and City Fields | AEC-21 — Alternative Shipping Address | `checkout.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
-| `AEC-123` | Lost password form shows the instruction text, the input and the RESET PASSWORD button | AEC-8 — Account Recovery | `account-management.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |
+| `AEC-123` | Lost password form shows the instruction text, the input and the RESET PASSWORD button | AEC-8 — Account Recovery | `recovery-form.feature` | Implemented; local fixture only, product execution unverified. |
 | `AEC-124` | Password reset link is sent for a registered username | AEC-8 — Account Recovery | `account-management.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. Requires controlled mailbox/reset-link handling; linked Bug AEC-163 reports non-delivery. |
 | `AEC-125` | Password reset link is sent for a registered email address | AEC-8 — Account Recovery | `account-management.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. Requires controlled mailbox/reset-link handling; linked Bug AEC-163 reports non-delivery. |
 | `AEC-126` | Password reset with a field that is empty | AEC-8 — Account Recovery | `account-management.feature` | Potential browser/UI candidate; explicit steps, assertions, data, and environment still need confirmation. |

@@ -14,11 +14,11 @@ The QA scope is limited to the four Jira Epics: Account Management (AEC-1), Brow
 - Make requirement-to-test traceability and its gaps visible.
 - Provide careful manual test documentation without inventing steps or results.
 - Organize proposed synthetic test data without storing credentials or personal data.
-- Prepare an automation traceability map for future Cucumber work without implementing automation.
+- Track the existing Tests through a Cucumber automation map; keep incomplete cases visibly blocked.
 
 ## Verified tools and approach
 
-Jira/Xray and manual testing through a web browser are named in AEC-140. Cucumber, Gherkin, Page Object Model, and future automation are planned project direction, not an existing implementation in this repository. The application's implementation stack is not confirmed by the Jira export.
+Jira/Xray and manual testing through a web browser are named in AEC-140. The initial automation uses Java, Cucumber, Gherkin, Selenium, and Page Object Model. The application's implementation stack is not confirmed by the Jira export.
 
 ## Repository map
 
@@ -30,7 +30,7 @@ Jira/Xray and manual testing through a web browser are named in AEC-140. Cucumbe
 | `test-data/` | Proposed, synthetic scenario data and its verification notes |
 | `test-executions/` | The four existing Jira Test Executions; no fabricated outcomes |
 | `test-reports/` | Future locations and guidance for QA reports |
-| `automation/` | Future automation structure and Jira-Test-to-candidate mapping; no automation code yet |
+| `automation/` | Initial read-only Cucumber/Selenium checks and Jira-Test-to-candidate mapping |
 | `source-exports/` | Local raw exports; intentionally excluded from Git |
 
 ## Getting started
@@ -40,6 +40,7 @@ Jira/Xray and manual testing through a web browser are named in AEC-140. Cucumbe
 3. Use the test case index to find a Jira Test by key. Check its linked requirements and clarification notes before preparing execution.
 4. Treat files in `test-data/` as proposed symbolic data until the application and test environment are verified. No passwords, credentials, or real customer data belong in this repository.
 5. Follow the existing plan in `test-plans/`. Record execution evidence in Jira/Xray; do not infer a result from an issue status.
+6. For automation prerequisites, safe local fixture validation, and the explicit test-environment configuration, see [automation setup](automation/README.md).
 
 ## Testing approach
 
@@ -55,7 +56,7 @@ AEC-140 describes manual functional testing of the four Epics, with test cases o
 - [Proposed test data](test-data/README.md)
 - [Existing Test Executions](test-executions/README.md)
 - [Reporting guidance](test-reports/README.md)
-- [Future automation mapping](automation/feature-mapping.md)
+- [Automation setup](automation/README.md) and [Test mapping](automation/feature-mapping.md)
 
 ## Jira export handling
 

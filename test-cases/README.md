@@ -21,4 +21,4 @@ This directory documents the **63 existing Jira Test issues**. Jira keys and exp
 - `Related Epic` and `Related User Story` are derived only from exported links and the linked Story's parent key.
 - Original Jira description text is retained. The export does not provide consistent separate step and expected-result fields; missing fields are called out rather than invented.
 - No Test Set membership or Precondition association is inferred.
-- Automation status is “not implemented”; candidate mapping is documented separately in [automation/feature-mapping.md](../automation/feature-mapping.md).
+- Automation status is recorded per case; the mapping in [automation/feature-mapping.md](../automation/feature-mapping.md) distinguishes the three implemented read-only checks from remaining candidates.
