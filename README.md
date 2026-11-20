@@ -62,3 +62,9 @@ Do not use real customer credentials, payment details, or production accounts.
    Keep incomplete scenarios clearly marked, for example with `@pending`.
 4. Document any required fixtures or environment assumptions in the feature
    or the corresponding test-runner documentation once one is added.
+
+### Contributor
+1. Ushindi Victoire
+2. Aline
+3. Paulin
+4. Steven
