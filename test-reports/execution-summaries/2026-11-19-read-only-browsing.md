@@ -8,8 +8,8 @@
 
 | Check | Result | Scope |
 |---|---|---|
-| [AEC-119](../../automation/features/product-sorting.feature) | 2 scenarios passed | Sorting options and both price orders within the Men category. |
-| [AEC-133](../../automation/features/product-filtering.feature) | 3 scenarios passed | Men, Women and Accessories header links lead to matching category headings. |
+| [AEC-119](../../automation/features/browsing-products/product-sorting.feature) | 2 scenarios passed | Sorting options and both price orders within the Men category. |
+| [AEC-133](../../automation/features/browsing-products/product-filtering.feature) | 3 scenarios passed | Men, Women and Accessories header links lead to matching category headings. |
 
 The five browser scenarios and 25 steps passed (Maven exit code 0). This does **not** establish a complete Xray result for either Jira Test: other sort modes, category contents, price filtering, and other entry points remain unverified. No Jira results were changed.
 

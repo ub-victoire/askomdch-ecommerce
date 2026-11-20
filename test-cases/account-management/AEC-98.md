@@ -35,4 +35,4 @@ No Test-to-Test-Set membership relationship is present in the export. Membership
 
 ## Automation status
 
-Not implemented. See [candidate mapping](../../automation/feature-mapping.md); candidacy and readiness are provisional.
+Opt-in masking and browser URL checks are implemented in [account-login-draft.feature](../../automation/features/account-management/account-login-draft.feature) and validated against a local fixture only. API-response exposure is not checked; application execution is unverified.

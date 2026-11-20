@@ -7,6 +7,7 @@ import static org.junit.Assert.assertTrue;
 import com.askomdch.qa.config.TestConfig;
 import com.askomdch.qa.config.CheckoutFixtures;
 import com.askomdch.qa.hooks.BrowserHooks;
+import com.askomdch.qa.pages.AccountPage;
 import com.askomdch.qa.pages.CartPage;
 import com.askomdch.qa.pages.CartPage.CartItem;
 import com.askomdch.qa.pages.CheckoutPage;
@@ -108,7 +109,14 @@ public class CheckoutSteps {
     public void loggedInOnCheckout() {
         new WebDriverWait(browser.driver(), Duration.ofSeconds(15)).until(current ->
                 current.findElements(org.openqa.selenium.By.cssSelector("form.login"))
+                        .stream().noneMatch(org.openqa.selenium.WebElement::isDisplayed)
+                && current.findElements(org.openqa.selenium.By.cssSelector(".woocommerce-info a.showlogin"))
                         .stream().noneMatch(org.openqa.selenium.WebElement::isDisplayed));
+        TestConfig.requireSameOrigin(browser.driver().getCurrentUrl());
+        assertEquals("/checkout", URI.create(browser.driver().getCurrentUrl()).getPath().replaceAll("/+$", ""));
+        browser.driver().get(TestConfig.baseUrl().resolve("/account/").toString());
+        new AccountPage(browser.driver()).waitForDashboard(CheckoutFixtures.accountUsername());
+        browser.driver().get(TestConfig.baseUrl().resolve("/checkout/").toString());
         TestConfig.requireSameOrigin(browser.driver().getCurrentUrl());
         assertEquals("/checkout", URI.create(browser.driver().getCurrentUrl()).getPath().replaceAll("/+$", ""));
     }
@@ -135,23 +143,27 @@ public class CheckoutSteps {
 
     @Then("the checkout billing and shipping fields contain the account's saved addresses")
     public void savedAddressesDisplayed() {
+        loggedInOnCheckout();
         CheckoutFixtures.billing().forEach((id, value) -> assertEquals(
                 "Saved billing field " + id + " differs.", value,
                 browser.driver().findElement(org.openqa.selenium.By.id(id)).getDomProperty("value")));
-        CheckoutFixtures.shipping().forEach((id, value) -> assertEquals(
-                "Saved shipping field " + id + " differs.", value,
-                browser.driver().findElement(org.openqa.selenium.By.id(id)).getDomProperty("value")));
+        CheckoutFixtures.shipping().forEach((id, value) -> {
+            if (!"order_comments".equals(id)) {
+                assertEquals("Saved shipping field " + id + " differs.", value,
+                        browser.driver().findElement(org.openqa.selenium.By.id(id)).getDomProperty("value"));
+            }
+        });
     }
 
     @When("the customer closes and reopens the browser using the same profile")
     public void reopenBrowser() {
         browser.reopenBrowser();
-        browser.driver().get(TestConfig.baseUrl().resolve("/checkout/").toString());
+        browser.driver().get(TestConfig.baseUrl().resolve("/account/").toString());
     }
 
     @Then("the login session is retained")
     public void loginSessionRetained() {
-        loggedInOnCheckout();
+        new AccountPage(browser.driver()).waitForDashboard(CheckoutFixtures.accountUsername());
     }
 
     @When("the customer submits checkout login with an empty {string} field")
@@ -167,12 +179,20 @@ public class CheckoutSteps {
 
     @When("the customer submits its username with an incorrect password")
     public void submitIncorrectPassword() {
-        page().login(CheckoutFixtures.accountUsername(), java.util.UUID.randomUUID().toString(), false);
+        String incorrect;
+        do {
+            incorrect = UUID.randomUUID().toString();
+        } while (incorrect.equals(CheckoutFixtures.accountPassword()));
+        page().login(CheckoutFixtures.accountUsername(), incorrect, false);
     }
 
     @When("the customer submits an unregistered {string} through checkout login")
     public void submitUnregisteredLogin(String identifier) {
-        String value = "username".equals(identifier) ? "qa-unregistered" : "qa-unregistered@example.invalid";
+        String value = switch (identifier) {
+            case "username" -> "ad";
+            case "email" -> "qa-unregistered@example.invalid";
+            default -> throw new IllegalArgumentException("Unknown unregistered login identifier: " + identifier);
+        };
         page().login(value, java.util.UUID.randomUUID().toString(), false);
     }
 
@@ -181,7 +201,7 @@ public class CheckoutSteps {
         String expected = "Error: the password you entered for the username "
                 + CheckoutFixtures.accountUsername() + " is incorrect. Lost your password?";
         assertEquals(expected, page().loginError());
-        assertTrue(page().loginRecoveryLinkVisible());
+        assertTrue(page().loginErrorRecoveryLinkVisible());
     }
 
     @When("the customer opens the checkout lost-password link")

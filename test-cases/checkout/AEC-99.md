@@ -35,7 +35,7 @@ No Test-to-Test-Set membership relationship is present in the export. Membership
 
 ## Automation status
 
-Not implemented. See [candidate mapping](../../automation/feature-mapping.md); candidacy and readiness are provisional.
+An opt-in browser-reopen authentication check is locally fixture-validated; see the [automation mapping](../../automation/feature-mapping.md). Application behavior and original Xray steps remain unverified.
 
 ## Traceability / clarification note
 

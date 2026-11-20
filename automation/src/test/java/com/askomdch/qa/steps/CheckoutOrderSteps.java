@@ -13,6 +13,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import java.net.URI;
+import java.util.List;
 import java.util.Map;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
@@ -22,6 +23,7 @@ import java.time.Duration;
 public class CheckoutOrderSteps {
     private final BrowserHooks browser;
     private String orderEmail;
+    private List<String> expectedShippingAddress;
 
     public CheckoutOrderSteps(BrowserHooks browser) {
         this.browser = browser;
@@ -88,6 +90,9 @@ public class CheckoutOrderSteps {
 
     @When("the customer submits the order with the alternative shipping address")
     public void submitWithShipping() {
+        expectedShippingAddress = page().shippingAddressValues();
+        assertTrue("Every shipping field must contain a value",
+                expectedShippingAddress.stream().noneMatch(String::isBlank));
         page().submitOrder();
     }
 
@@ -98,12 +103,11 @@ public class CheckoutOrderSteps {
 
     @Then("the order-received shipping address matches the alternative shipping fixture")
     public void shippingAddressMatches() {
-        assertTrue(page().orderReceivedShippingAddress().contains(
-                CheckoutFixtures.required("ASKOMDCH_SHIPPING_FIRST_NAME")));
-        assertTrue(page().orderReceivedShippingAddress().contains(
-                CheckoutFixtures.required("ASKOMDCH_SHIPPING_ADDRESS")));
-        assertTrue(page().orderReceivedShippingAddress().contains(
-                CheckoutFixtures.required("ASKOMDCH_SHIPPING_CITY")));
+        assertTrue("Expected an order confirmation", page().orderReceived());
+        String address = page().orderReceivedShippingAddress();
+        for (String value : expectedShippingAddress) {
+            assertTrue("Shipping address is missing an expected field", address.contains(value));
+        }
     }
 
     @When("the customer submits checkout with the {string} shipping field empty")
@@ -180,17 +184,15 @@ public class CheckoutOrderSteps {
     @Then("the order is submitted using direct bank transfer")
     public void orderUsesBankTransfer() {
         assertTrue(page().orderReceived());
-        assertTrue(browser.driver().findElement(By.cssSelector(
-                ".woocommerce-order-overview__payment-method strong")).getText().toLowerCase()
-                .contains("direct bank transfer"));
+        assertEquals("Direct bank transfer", browser.driver().findElement(By.cssSelector(
+                ".woocommerce-order-overview__payment-method strong")).getText().trim());
     }
 
     @Then("the order is submitted using cash on delivery")
     public void orderUsesCash() {
         assertTrue(page().orderReceived());
-        assertTrue(browser.driver().findElement(By.cssSelector(
-                ".woocommerce-order-overview__payment-method strong")).getText().toLowerCase()
-                .contains("cash on delivery"));
+        assertEquals("Cash on delivery", browser.driver().findElement(By.cssSelector(
+                ".woocommerce-order-overview__payment-method strong")).getText().trim());
     }
 
     @When("the customer submits the order with that billing fixture")

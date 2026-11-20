@@ -1,6 +1,6 @@
 # AskOmDch E-commerce QA
 
-This repository contains the QA documentation and future automation planning for the AskOmDch e-commerce application. The project is organized around the existing Jira Epics, Stories, Xray Tests, Preconditions, Test Sets, Test Executions, and Test Plan.
+This repository contains QA documentation and Cucumber automation for the AskOmDch e-commerce application. The project is organized around the existing Jira Epics, Stories, Xray Tests, Preconditions, Test Sets, Test Executions, and Test Plan.
 
 ## Application and purpose
 
@@ -30,7 +30,7 @@ Jira/Xray and manual testing through a web browser are named in AEC-140. The ini
 | `test-data/` | Proposed, synthetic scenario data and its verification notes |
 | `test-executions/` | The four existing Jira Test Executions; no fabricated outcomes |
 | `test-reports/` | Evidence-based QA reports and reporting guidance |
-| `automation/` | Cucumber/Selenium checks and Jira-Test-to-candidate mapping |
+| `automation/` | Cucumber/Selenium checks grouped by Epic, unassigned clarification placeholders, and Jira Test mapping |
 | `source-exports/` | Local raw exports; intentionally excluded from Git |
 
 ## Getting started

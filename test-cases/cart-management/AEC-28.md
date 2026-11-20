@@ -35,4 +35,4 @@ No Test-to-Test-Set membership relationship is present in the export. Membership
 
 ## Automation status
 
-Partially implemented in [cart-updates.feature](../../automation/features/cart-updates.feature) for one configured product from its details page. Local fixture only; application execution and original Xray steps remain unverified.
+Partially implemented in [cart-updates.feature](../../automation/features/cart-management/cart-updates.feature) for one configured product from its details page. Local fixture only; application execution and original Xray steps remain unverified.

@@ -25,11 +25,13 @@ public class AccountSteps {
     @When("the customer opens the account page")
     public void openAccountPage() {
         browser.driver().get(TestConfig.baseUrl().resolve("/account/").toString());
+        TestConfig.requireSameOrigin(browser.driver().getCurrentUrl());
     }
 
     @When("the customer opens the lost-password page")
     public void openLostPasswordPage() {
         browser.driver().get(TestConfig.baseUrl().resolve("/account/lost-password/").toString());
+        TestConfig.requireSameOrigin(browser.driver().getCurrentUrl());
     }
 
     @Then("the registration form displays the {string} control")

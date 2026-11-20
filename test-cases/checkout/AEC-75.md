@@ -35,4 +35,4 @@ No Test-to-Test-Set membership relationship is present in the export. Membership
 
 ## Automation status
 
-Not implemented. See [candidate mapping](../../automation/feature-mapping.md); candidacy and readiness are provisional.
+An opt-in alternative-shipping order scenario is implemented in [checkout-orders.feature](../../automation/features/checkout/checkout-orders.feature). It is locally fixture-validated only; application behavior, original Xray steps and country/state display require verification. Use an approved non-production environment with test payments, synthetic fixtures and cleanup.

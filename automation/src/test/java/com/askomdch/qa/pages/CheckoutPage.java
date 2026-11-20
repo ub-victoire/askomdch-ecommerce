@@ -97,6 +97,12 @@ public class CheckoutPage {
                 .stream().anyMatch(WebElement::isDisplayed);
     }
 
+    public boolean loginErrorRecoveryLinkVisible() {
+        return driver.findElements(By.cssSelector(".woocommerce-error li a"))
+                .stream().anyMatch(link -> link.isDisplayed()
+                        && link.getText().trim().equals("Lost your password?"));
+    }
+
     public void login(String username, String password, boolean remember) {
         TestConfig.requireCheckoutLoginAllowed();
         TestConfig.requireSameOrigin(driver.getCurrentUrl());
@@ -141,10 +147,10 @@ public class CheckoutPage {
 
     public void fillField(String id, String value) {
         WebElement field = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
-        field.clear();
         if ("select".equalsIgnoreCase(field.getTagName())) {
             new Select(field).selectByValue(value);
         } else {
+            field.clear();
             field.sendKeys(value);
         }
     }
@@ -187,6 +193,17 @@ public class CheckoutPage {
                 .getText().trim().replaceAll("\\s+", " ");
     }
 
+    public List<String> shippingAddressValues() {
+        return List.of("shipping_first_name", "shipping_last_name", "shipping_country",
+                "shipping_address_1", "shipping_city", "shipping_state", "shipping_postcode").stream()
+                .map(id -> {
+                    WebElement field = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(id)));
+                    return "select".equalsIgnoreCase(field.getTagName())
+                            ? new Select(field).getFirstSelectedOption().getText().trim()
+                            : field.getDomProperty("value").trim();
+                }).toList();
+    }
+
     public void selectPaymentMethod(String method) {
         By option = paymentOption(method);
         wait.until(ExpectedConditions.elementToBeClickable(option)).click();
@@ -202,9 +219,13 @@ public class CheckoutPage {
     }
 
     public boolean orderReceived() {
-        return driver.getCurrentUrl().matches(".*/checkout/order-received/[^/?#]+/?(?:\\?.*)?$")
-                && !driver.findElements(By.cssSelector(".woocommerce-order-overview__order.order strong"))
-                        .isEmpty();
+        return wait.until(current -> {
+            TestConfig.requireSameOrigin(current.getCurrentUrl());
+            return java.net.URI.create(current.getCurrentUrl()).getPath()
+                    .matches("/checkout/order-received/[^/]+/?")
+                    && current.findElements(By.cssSelector(".woocommerce-order-overview__order.order strong"))
+                            .stream().anyMatch(element -> element.isDisplayed() && !element.getText().isBlank());
+        });
     }
 
     public boolean fieldInvalidById(String fieldId) {

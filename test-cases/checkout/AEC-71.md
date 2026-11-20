@@ -35,4 +35,4 @@ No Test-to-Test-Set membership relationship is present in the export. Membership
 
 ## Automation status
 
-Not implemented. See [candidate mapping](../../automation/feature-mapping.md); candidacy and readiness are provisional.
+An opt-in authentication check is implemented in [checkout-authentication.feature](../../automation/features/checkout/checkout-authentication.feature) and validated against a local fixture only. Application execution remains unverified.

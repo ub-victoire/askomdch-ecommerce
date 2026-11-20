@@ -35,4 +35,4 @@ No Test-to-Test-Set membership relationship is present in the export. Membership
 
 ## Automation status
 
-Login form toggle check implemented in [checkout-controls.feature](../../automation/features/checkout-controls.feature), based on AEC-17. Local fixture only; original Xray steps and application execution remain unverified.
+Login form toggle check implemented in [checkout-controls.feature](../../automation/features/checkout/checkout-controls.feature), based on AEC-17. Local fixture only; original Xray steps and application execution remain unverified.

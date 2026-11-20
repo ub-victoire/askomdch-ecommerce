@@ -29,32 +29,33 @@ public final class CheckoutFixtures {
     }
 
     public static Map<String, String> billing() {
-        return Map.of(
-                "billing_first_name", required("ASKOMDCH_BILLING_FIRST_NAME"),
-                "billing_last_name", required("ASKOMDCH_BILLING_LAST_NAME"),
-                "billing_country", required("ASKOMDCH_BILLING_COUNTRY"),
-                "billing_address_1", required("ASKOMDCH_BILLING_ADDRESS"),
-                "billing_city", required("ASKOMDCH_BILLING_CITY"),
-                "billing_state", required("ASKOMDCH_BILLING_STATE"),
-                "billing_postcode", required("ASKOMDCH_BILLING_POSTCODE"),
-                "billing_phone", required("ASKOMDCH_BILLING_PHONE"),
-                "billing_email", required("ASKOMDCH_BILLING_EMAIL"));
+        Map<String, String> values = new LinkedHashMap<>();
+        values.put("billing_country", required("ASKOMDCH_BILLING_COUNTRY"));
+        values.put("billing_state", required("ASKOMDCH_BILLING_STATE"));
+        values.put("billing_first_name", required("ASKOMDCH_BILLING_FIRST_NAME"));
+        values.put("billing_last_name", required("ASKOMDCH_BILLING_LAST_NAME"));
+        values.put("billing_address_1", required("ASKOMDCH_BILLING_ADDRESS"));
+        values.put("billing_city", required("ASKOMDCH_BILLING_CITY"));
+        values.put("billing_postcode", required("ASKOMDCH_BILLING_POSTCODE"));
+        values.put("billing_phone", required("ASKOMDCH_BILLING_PHONE"));
+        values.put("billing_email", required("ASKOMDCH_BILLING_EMAIL"));
+        return java.util.Collections.unmodifiableMap(values);
     }
 
     public static Map<String, String> shipping() {
         Map<String, String> values = new LinkedHashMap<>();
+        values.put("shipping_country", required("ASKOMDCH_SHIPPING_COUNTRY"));
+        values.put("shipping_state", required("ASKOMDCH_SHIPPING_STATE"));
         values.put("shipping_first_name", required("ASKOMDCH_SHIPPING_FIRST_NAME"));
         values.put("shipping_last_name", required("ASKOMDCH_SHIPPING_LAST_NAME"));
-        values.put("shipping_country", required("ASKOMDCH_SHIPPING_COUNTRY"));
         values.put("shipping_address_1", required("ASKOMDCH_SHIPPING_ADDRESS"));
         values.put("shipping_city", required("ASKOMDCH_SHIPPING_CITY"));
-        values.put("shipping_state", required("ASKOMDCH_SHIPPING_STATE"));
         values.put("shipping_postcode", required("ASKOMDCH_SHIPPING_POSTCODE"));
         String notes = System.getenv("ASKOMDCH_SHIPPING_NOTES");
         if (notes != null) {
             values.put("order_comments", notes);
         }
-        return Map.copyOf(values);
+        return java.util.Collections.unmodifiableMap(values);
     }
 
     public static String uniqueEmail() {

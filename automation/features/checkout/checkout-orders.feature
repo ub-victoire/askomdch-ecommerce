@@ -1,6 +1,7 @@
-@cart_session @checkout_order @pending
+@cart_session @checkout_order
 Feature: Checkout submission scenarios
-  Draft step bindings require validation before execution; scenarios may create accounts or orders.
+  Run only with authorized synthetic fixtures, test payments, and an approved cleanup process.
+  Pending scenarios still require stronger assertions and local fixture validation.
 
   Background:
     Given an authorized test environment is configured
@@ -17,7 +18,7 @@ Feature: Checkout submission scenarios
       When the customer submits the order with the alternative shipping address
       Then the order-received shipping address matches the alternative shipping fixture
 
-    @AEC-117
+    @AEC-117 @pending
     Scenario Outline: Reject a missing mandatory shipping field
       Given the approved checkout billing fixture is loaded
       And the approved alternative shipping fixture is loaded
@@ -37,7 +38,7 @@ Feature: Checkout submission scenarios
         | State / County   |
         | Postcode / ZIP   |
 
-    @AEC-118
+    @AEC-118 @pending
     Scenario: Accept documented maximum lengths for alternative shipping
       Given the approved checkout billing fixture is loaded
       And the approved alternative shipping fixture is loaded
@@ -50,7 +51,7 @@ Feature: Checkout submission scenarios
       When the customer submits the order with that alternative shipping fixture
       Then the order is submitted with the alternative shipping address
 
-    @AEC-121
+    @AEC-121 @pending
     Scenario Outline: Reject non-alphabetical shipping names and city
       Given the approved checkout billing fixture is loaded
       And the approved alternative shipping fixture is loaded
@@ -66,20 +67,7 @@ Feature: Checkout submission scenarios
         | Town / City |
 
   Rule: AEC-23 billing and payment
-    @AEC-144
-    Scenario: Place an order using the default payment method
-      Given the approved checkout billing fixture is loaded
-      And direct bank transfer is selected by default
-      When the customer places the order
-      Then the order is submitted using direct bank transfer
-
-    @AEC-145
-    Scenario: Place an order using cash on delivery
-      Given the approved checkout billing fixture is loaded
-      When the customer selects cash on delivery and places the order
-      Then the order is submitted using cash on delivery
-
-    @AEC-148
+    @AEC-148 @pending
     Scenario: Accept documented maximum lengths for billing fields
       Given the approved checkout billing fixture is loaded
       And the billing fixture uses the documented maximum lengths:
@@ -91,7 +79,7 @@ Feature: Checkout submission scenarios
       When the customer submits the order with that billing fixture
       Then the order is submitted with the billing details
 
-    @AEC-153
+    @AEC-153 @pending
     Scenario Outline: Reject a missing mandatory billing field
       Given the approved checkout billing fixture is loaded
       And the selected country requires the "<field>" billing field
@@ -112,7 +100,7 @@ Feature: Checkout submission scenarios
         | Phone            |
         | Email Address    |
 
-    @AEC-156
+    @AEC-156 @pending
     Scenario Outline: Reject non-alphabetical billing names and city
       Given the approved checkout billing fixture is loaded
       When the customer submits checkout with non-alphabetical characters in billing "<field>"
@@ -125,7 +113,7 @@ Feature: Checkout submission scenarios
         | Town / City |
 
   Rule: AEC-20 account creation during checkout
-    @AEC-149
+    @AEC-149 @pending
     Scenario: Create an account during a successful checkout
       Given the approved checkout billing fixture is loaded
       And an approved unique billing email is configured
@@ -134,7 +122,7 @@ Feature: Checkout submission scenarios
       And the order is saved under the new account
       And the customer is authenticated on the order-received page
 
-    @AEC-149
+    @AEC-149 @pending
     Scenario: Reject an empty checkout account password
       Given the approved checkout billing fixture is loaded
       And an approved unique billing email is configured
@@ -142,7 +130,7 @@ Feature: Checkout submission scenarios
       Then the customer remains on checkout and the order is not placed
       And the checkout error is "Please enter an account password."
 
-    @AEC-149
+    @AEC-149 @pending
     Scenario Outline: Reject an invalid checkout account password
       Given the approved checkout billing fixture is loaded
       And an approved unique billing email is configured
@@ -160,7 +148,7 @@ Feature: Checkout submission scenarios
         | missing_number    |
         | missing_special   |
 
-    @AEC-149
+    @AEC-149 @pending
     Scenario: Reject an already registered billing email during account creation
       Given the approved checkout billing fixture is loaded
       And an approved registered billing email is configured

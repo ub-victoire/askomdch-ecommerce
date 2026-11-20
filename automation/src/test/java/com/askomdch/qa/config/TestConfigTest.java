@@ -13,6 +13,9 @@ public class TestConfigTest {
     private String previousProductPath;
     private String previousLoginOptIn;
     private String previousOrderOptIn;
+    private String previousAccountLoginOptIn;
+    private String previousAccountRegistrationOptIn;
+    private String previousAccountRecoveryOptIn;
 
     @Before
     public void saveProperty() {
@@ -21,6 +24,9 @@ public class TestConfigTest {
         previousProductPath = System.getProperty("cartProductPath");
         previousLoginOptIn = System.getProperty("allowCheckoutLogin");
         previousOrderOptIn = System.getProperty("allowCheckoutOrder");
+        previousAccountLoginOptIn = System.getProperty("allowAccountLogin");
+        previousAccountRegistrationOptIn = System.getProperty("allowAccountRegistration");
+        previousAccountRecoveryOptIn = System.getProperty("allowAccountRecovery");
     }
 
     @After
@@ -34,6 +40,9 @@ public class TestConfigTest {
         restore("cartProductPath", previousProductPath);
         restore("allowCheckoutLogin", previousLoginOptIn);
         restore("allowCheckoutOrder", previousOrderOptIn);
+        restore("allowAccountLogin", previousAccountLoginOptIn);
+        restore("allowAccountRegistration", previousAccountRegistrationOptIn);
+        restore("allowAccountRecovery", previousAccountRecoveryOptIn);
     }
 
     private void restore(String key, String value) {
@@ -134,5 +143,33 @@ public class TestConfigTest {
         TestConfig.requireCheckoutOrderAllowed();
         System.setProperty("baseUrl", "https://askomdch.com.");
         assertThrows(IllegalStateException.class, TestConfig::requireCheckoutOrderAllowed);
+    }
+
+    @Test
+    public void accountLoginRequiresOptInAndANonProductionOrigin() {
+        System.setProperty("baseUrl", "http://127.0.0.1:8080");
+        System.clearProperty("allowAccountLogin");
+        assertThrows(IllegalStateException.class, TestConfig::requireAccountLoginAllowed);
+        System.setProperty("allowAccountLogin", "true");
+        TestConfig.requireAccountLoginAllowed();
+        for (String origin : new String[] {
+                "https://askomdch.com", "https://www.askomdch.com", "https://askomdch.com."
+        }) {
+            System.setProperty("baseUrl", origin);
+            assertThrows(IllegalStateException.class, TestConfig::requireAccountLoginAllowed);
+        }
+    }
+
+    @Test
+    public void accountRegistrationAndRecoveryRequireDedicatedOptIns() {
+        System.setProperty("baseUrl", "http://127.0.0.1:8080");
+        System.clearProperty("allowAccountRegistration");
+        System.clearProperty("allowAccountRecovery");
+        assertThrows(IllegalStateException.class, TestConfig::requireAccountRegistrationAllowed);
+        assertThrows(IllegalStateException.class, TestConfig::requireAccountRecoveryAllowed);
+        System.setProperty("allowAccountRegistration", "true");
+        System.setProperty("allowAccountRecovery", "true");
+        TestConfig.requireAccountRegistrationAllowed();
+        TestConfig.requireAccountRecoveryAllowed();
     }
 }

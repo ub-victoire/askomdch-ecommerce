@@ -1,0 +1,20 @@
+fixture,field,sample,notes
+billing,first_name,Test,Synthetic example; replace before testing
+billing,last_name,Customer,Synthetic example; replace before testing
+billing,country,US,Environment-specific country option value
+billing,state,CA,Environment-specific state option value
+billing,address,1 Example Street,Synthetic example
+billing,city,Exampleville,Synthetic example
+billing,postcode,00000,Illustrative only; confirm country format
+billing,phone,0000000000,Illustrative only; Jira requires phone but observed label says optional
+billing,email,checkout@example.invalid,Reserved non-deliverable domain; replace with approved test mailbox if needed
+shipping,first_name,Sample,Synthetic example
+shipping,last_name,Recipient,Synthetic example
+shipping,country,US,Environment-specific country option value
+shipping,state,CA,Environment-specific state option value
+shipping,address,2 Example Avenue,Synthetic example
+shipping,city,Exampleville,Synthetic example
+shipping,postcode,11111,Illustrative only; confirm country format
+account,username,disposable-account-alias,Provision outside source control; not a working account
+account,password,secret-supplied-outside-repository,Do not commit passwords or credentials
+account,unique_email_template,test-{uuid}@example.invalid,Reserved domain; provision a controlled mailbox if required

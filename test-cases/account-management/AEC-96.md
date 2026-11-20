@@ -35,4 +35,4 @@ No Test-to-Test-Set membership relationship is present in the export. Membership
 
 ## Automation status
 
-Not implemented. See [candidate mapping](../../automation/feature-mapping.md); candidacy and readiness are provisional.
+An opt-in session expiration check is implemented in [account-login-draft.feature](../../automation/features/account-management/account-login-draft.feature) and validated against a local fixture only. Application execution is unverified.

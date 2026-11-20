@@ -37,6 +37,21 @@ public class BrowserHooks {
         TestConfig.cartProductUrl();
     }
 
+    @Before(order = 0, value = "@account_login")
+    public void authorizeAccountLogin() {
+        TestConfig.requireAccountLoginAllowed();
+    }
+
+    @Before(order = 0, value = "@account_registration")
+    public void authorizeAccountRegistration() {
+        TestConfig.requireAccountRegistrationAllowed();
+    }
+
+    @Before(order = 0, value = "@account_recovery")
+    public void authorizeAccountRecovery() {
+        TestConfig.requireAccountRecoveryAllowed();
+    }
+
     @Before(order = 1)
     public void startBrowser() {
         TestConfig.baseUrl();

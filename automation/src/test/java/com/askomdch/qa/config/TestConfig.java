@@ -30,13 +30,40 @@ public final class TestConfig {
     }
 
     public static void requireCartChangesAllowed() {
-        URI origin = baseUrl();
         if (!Boolean.getBoolean("allowCartChanges")) {
             throw new IllegalStateException("Cart scenarios require -DallowCartChanges=true.");
         }
+        requireNonProductionOrigin();
+    }
+
+    public static void requireAccountLoginAllowed() {
+        if (!Boolean.getBoolean("allowAccountLogin")) {
+            throw new IllegalStateException("Account login scenarios require -DallowAccountLogin=true.");
+        }
+        requireNonProductionOrigin();
+    }
+
+    public static void requireAccountRegistrationAllowed() {
+        if (!Boolean.getBoolean("allowAccountRegistration")) {
+            throw new IllegalStateException(
+                    "Account registration scenarios require -DallowAccountRegistration=true.");
+        }
+        requireNonProductionOrigin();
+    }
+
+    public static void requireAccountRecoveryAllowed() {
+        if (!Boolean.getBoolean("allowAccountRecovery")) {
+            throw new IllegalStateException(
+                    "Account recovery scenarios require -DallowAccountRecovery=true.");
+        }
+        requireNonProductionOrigin();
+    }
+
+    private static void requireNonProductionOrigin() {
+        URI origin = baseUrl();
         String host = origin.getHost().replaceAll("\\.+$", "").toLowerCase(java.util.Locale.ROOT);
         if (host.equals("askomdch.com") || host.endsWith(".askomdch.com")) {
-            throw new IllegalStateException("Cart-changing scenarios require a non-production environment.");
+            throw new IllegalStateException("State-changing scenarios require a non-production environment.");
         }
     }
 

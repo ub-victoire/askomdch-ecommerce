@@ -35,4 +35,4 @@ No Test-to-Test-Set membership relationship is present in the export. Membership
 
 ## Automation status
 
-Password masking and empty-username validation are locally checked in [checkout-controls.feature](../../automation/features/checkout-controls.feature) and [checkout-login-validation.feature](../../automation/features/checkout-login-validation.feature). The remaining login validation is a blocked draft; application behavior is unverified.
+Password masking and required-field checks are locally validated; see the [automation mapping](../../automation/feature-mapping.md). Application behavior and original Xray steps remain unverified.
