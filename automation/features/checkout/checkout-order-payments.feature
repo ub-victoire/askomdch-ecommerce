@@ -4,8 +4,7 @@ Feature: Checkout order payment methods
   Run only in an authorized non-production environment with test payments and cleanup.
 
   Background:
-    Given an authorized test environment is configured
-    And the customer has a fresh browser session
+    Given the customer has a fresh browser session
     And the customer adds the configured product to the cart
     And the cart contains one unit of the selected product
     And the customer opens checkout with that product

@@ -1,9 +1,0 @@
-scenario_id,jira_test,scenario,synthetic_data_reference,source,verification_status
-AEC149-BND-01,AEC-149,Checkout account password at minimum permitted length,8_character_password_category; unique_billing_email_alias,AEC-20 acceptance criteria,proposed-unverified
-AEC149-BND-02,AEC-149,Checkout account password at maximum permitted length,15_character_password_category; unique_billing_email_alias,AEC-20 acceptance criteria,proposed-unverified
-AEC118-BND-01,AEC-118,Alternative shipping upper boundaries for name and city,50_character_name_or_city_category,AEC-118 Jira description,proposed-unverified
-AEC118-BND-02,AEC-118,Alternative shipping upper boundary for street,100_character_street_category,AEC-118 Jira description,proposed-unverified
-AEC118-BND-03,AEC-118,Alternative shipping upper boundary for notes,500_character_notes_category,AEC-118 Jira description,proposed-unverified
-AEC148-BND-01,AEC-148,Billing upper boundaries for name and city,50_character_name_or_city_category,AEC-148 Jira description,proposed-unverified
-AEC148-BND-02,AEC-148,Billing upper boundary for street,100_character_street_category,AEC-148 Jira description,proposed-unverified
-AEC148-BND-03,AEC-148,Billing upper boundary for phone,15_character_phone_category,AEC-148 Jira description,proposed-unverified

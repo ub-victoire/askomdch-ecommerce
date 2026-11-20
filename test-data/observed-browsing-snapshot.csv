@@ -1,8 +1,0 @@
-observed_date,scenario,request_url,observed_products,observed_detail,status
-2026-11-20,search-lowercase,https://askomdch.com/?s=shirt&post_type=product,Blue Tshirt; Green Tshirt,Two matching products; heading Search results: “shirt”,observed-snapshot-revalidate
-2026-11-20,search-uppercase,https://askomdch.com/?s=SHIRT&post_type=product,Blue Tshirt; Green Tshirt,Two matching products; heading echoes query case,observed-snapshot-revalidate
-2026-11-20,search-mixed-case,https://askomdch.com/?s=ShIrT&post_type=product,Blue Tshirt; Green Tshirt,Two matching products; heading echoes query case,observed-snapshot-revalidate
-2026-11-20,search-no-match,https://askomdch.com/?s=qa-no-match-93f6b2&post_type=product,None,No products were found matching your selection.,observed-snapshot-revalidate
-2026-11-20,accessories-category,https://askomdch.com/product-category/accessories/,Anchor Bracelet; Black Over-the-shoulder Handbag; Boho Bangle Bracelet,Displayed prices $10 sale; $75; $25 respectively; slider $10–$80,observed-snapshot-revalidate
-2026-11-20,accessories-price-range,https://askomdch.com/product-category/accessories/?min_price=10&max_price=25,Anchor Bracelet; Boho Bangle Bracelet,Displayed prices $10 sale and $25; slider displays $10–$30,observed-snapshot-revalidate
-2026-11-20,accessories-range-price-desc,https://askomdch.com/product-category/accessories/?min_price=10&max_price=25&orderby=price-desc,Boho Bangle Bracelet; Anchor Bracelet,Prices $25 then $10 sale; category and requested range retained in URL,observed-snapshot-revalidate

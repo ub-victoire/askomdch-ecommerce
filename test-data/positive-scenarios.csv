@@ -1,4 +1,0 @@
-scenario_id,jira_test,scenario,synthetic_data_reference,source,verification_status
-AEC149-POS-01,AEC-149,Create account during checkout with a valid password,unique_billing_email_alias; valid_password_policy_alias,AEC-20 acceptance criteria,proposed-unverified
-AEC58-POS-01,AEC-58,Successful registration creates account and logs customer in,unique_registration_profile_alias,AEC-58 Jira description,proposed-unverified
-AEC144-POS-01,AEC-144,Place order with default payment method,valid_checkout_profile_alias; non-production-order-fixture,AEC-144 Jira description,proposed-unverified

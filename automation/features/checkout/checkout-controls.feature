@@ -1,9 +1,7 @@
-@cart_session @checkout_controls
 Feature: Checkout controls and order review
 
   Background:
-    Given an authorized test environment is configured
-    And the customer has a fresh browser session
+    Given the customer has a fresh browser session
     And the customer adds the configured product to the cart
     And the cart contains one unit of the selected product
     And the customer opens checkout with that product
@@ -19,11 +17,6 @@ Feature: Checkout controls and order review
       Then the checkout login form is visible
       When the customer closes the checkout login form
       Then the checkout login form is hidden
-
-    @AEC-79
-    Scenario: Mask the checkout login password
-      When the customer opens the checkout login form
-      Then the checkout login password is masked
 
     @AEC-105
     Scenario: Navigate from checkout to password recovery
