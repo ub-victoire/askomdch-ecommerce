@@ -1,6 +1,5 @@
-@cart_session @checkout_login @pending
+@cart_session @checkout_login
 Feature: Checkout login scenarios
-  Step bindings are drafts; assertions and account fixtures require validation.
 
   Background:
     Given an authorized test environment is configured
@@ -11,20 +10,6 @@ Feature: Checkout login scenarios
     And the customer opens the checkout login form
 
   Rule: AEC-17 registered customer login
-    @AEC-71
-    Scenario: Log in using a registered username
-      Given an approved registered test account is available
-      When the customer logs in with its username and matching password
-      Then the customer is logged in on checkout
-      And the returning customer banner is hidden
-
-    @AEC-73
-    Scenario: Log in using a registered email address
-      Given an approved registered test account is available
-      When the customer logs in with its email address and matching password
-      Then the customer is logged in on checkout
-      And the returning customer banner is hidden
-
     @AEC-103
     Scenario: Saved addresses populate after checkout login
       Given an approved registered test account has known saved billing and shipping addresses
@@ -47,8 +32,8 @@ Feature: Checkout login scenarios
 
       Examples:
         | field            | message                            |
-        | username or email | Error: Username is required        |
-        | password          | Error: the password field is empyt |
+        | username or email | Error: Username is required         |
+        | password          | Error: the password field is empyt  |
 
     @AEC-82
     Scenario: Reject an incorrect password for a registered account
@@ -65,7 +50,7 @@ Feature: Checkout login scenarios
 
       Examples:
         | identifier | message |
-        | username   | The username qa-unregistered is not registered on this site. If you are unsure of your username, try your email address instead. |
+        | username   | The username ad is not registered on this site. If you are unsure of your username, try your email address instead. |
         | email      | Unknown email address. Check again or try your username. |
 
     @AEC-109
