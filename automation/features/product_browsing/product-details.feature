@@ -1,9 +1,9 @@
 Feature: View Product Details 
 
     Scenario: Customer verifying the click product details
-        Given verify that product details page opens from catalague page 
-        When customer selects a product page
-        And click the search/zoom icon displayed on the product image
+        Given product details page is accessible 
+        When customer selects a <product> from <page>
+        And click the search/zoom icon displayed on the <product> image
         And close the enlarged full-screen image view by clicking on other side of page
         And click on Description section
         And click on Additional information section
