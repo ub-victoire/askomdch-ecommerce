@@ -63,7 +63,7 @@ Do not use real customer credentials, payment details, or production accounts.
 4. Document any required fixtures or environment assumptions in the feature
    or the corresponding test-runner documentation once one is added.
 
-### Contributor
+### Contributors
 1. Ushindi Victoire
 2. Aline
 3. Paulin
