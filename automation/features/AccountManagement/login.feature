@@ -36,6 +36,8 @@ Feature: Customer Login
     Examples: Registered username with a valid password
       | username  | password  | account_url                   | page_heading |
       | aline | Aline123! | https://askomdch.com/account/ | Account      |
+      | victor | Victor123! | https://askomdch.com/account/ | Account      |
+      | james | James123! | https://askomdch.com/account/ | Account      |
 
   @smoke @high-priority @positive
   Scenario Outline: Login with a registered email address
@@ -59,3 +61,5 @@ Feature: Customer Login
     Examples: Registered email address with a valid password
       | username  | email                    | password  | account_url                   | page_heading |
       | aline | aline@gmail.com | aline123! | https://askomdch.com/account/ | Account      |
+      | victor | victor@gmail.com | victor123! | https://askomdch.com/account/ | Account      |
+      | james | james@gmail.com | james123! | https://askomdch.com/account/ | Account      |

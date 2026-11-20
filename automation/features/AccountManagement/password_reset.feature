@@ -33,6 +33,8 @@ Feature: Password Reset
     Examples: Registered username
       | username  | email                    | confirmation_message                | wait_time_minutes | email_subject_text | reset_link_prefix                           |
       | aline | aline@gmail.com | Password reset email has been sent. | 10                | Password Reset     | https://askomdch.com/account/lost-password/ |
+      | victor | victor@gmail.com | Password reset email has been sent. | 10                | Password Reset     | https://askomdch.com/account/lost-password/ |
+      | james | james@gmail.com | Password reset email has been sent. | 10                | Password Reset     | https://askomdch.com/account/lost-password/ |
 
 
   @smoke @high-priority @positive
@@ -52,4 +54,6 @@ Feature: Password Reset
 
     Examples: Registered email address
       | username  | email                    | confirmation_message                | wait_time_minutes | email_subject_text | reset_link_prefix                           |
-      | qa_user01 | qa.user01@mailinator.com | Password reset email has been sent. | 10                | Password Reset     | https://askomdch.com/account/lost-password/ |
+      | aline | aline@gmail.com | Password reset email has been sent. | 10                | Password Reset     | https://askomdch.com/account/lost-password/ |
+      | victor | victor@gmail.com | Password reset email has been sent. | 10                | Password Reset     | https://askomdch.com/account/lost-password/ |
+      | james | james@gmail.com | Password reset email has been sent. | 10                | Password Reset     | https://askomdch.com/account/lost-password/ |
