@@ -1,4 +1,3 @@
-@cart_session @checkout_order
 Feature: Checkout addresses, account, and order scenarios
   Each scenario checks a separate checkout behavior. Scenario outlines reuse
   the same validation for different fields; they are not duplicate order flows.
@@ -21,7 +20,7 @@ Feature: Checkout addresses, account, and order scenarios
       | Email address  | qa.checkout@example.invalid |
 
   Rule: AEC-21 alternative shipping
-    @AEC-75 @phase-1 @pending
+    @AEC-75
     Scenario Outline: Submit an order with a different shipping address
       Given the customer enables a different shipping address
       And the alternative shipping form uses these synthetic values:
@@ -39,7 +38,7 @@ Feature: Checkout addresses, account, and order scenarios
         | shippingFirstName | shippingLastName | shippingAddress      | shippingCity | shippingPostcode |
         | Taylor            | Sample            | 456 Sample Avenue    | Sampletown   | 90211            |
 
-    @AEC-117 @phase-1 @pending
+    @AEC-117
     Scenario Outline: Reject a missing mandatory shipping field
       Given the customer enables a different shipping address
       And the alternative shipping form uses these synthetic values:
@@ -62,7 +61,7 @@ Feature: Checkout addresses, account, and order scenarios
         | Town / City    | Shipping Town / City is a required field. |
         | ZIP Code       | Shipping ZIP Code is a required field.    |
 
-    @AEC-118 @phase-2 @pending
+    @AEC-118
     Scenario Outline: Accept values at the alternative shipping field limits
       Given the customer enables a different shipping address
       And the alternative shipping form uses these synthetic values:
@@ -85,7 +84,7 @@ Feature: Checkout addresses, account, and order scenarios
         | Street address | 100   |
         | Order notes    | 500   |
 
-    @AEC-118 @phase-2 @pending
+    @AEC-118
     Scenario Outline: Reject alternative shipping values over the field limits
       Given the customer enables a different shipping address
       And the alternative shipping form uses these synthetic values:
@@ -109,7 +108,7 @@ Feature: Checkout addresses, account, and order scenarios
         | Street address | 101          |
         | Order notes    | 501          |
 
-    @AEC-121 @phase-2 @pending
+    @AEC-121
     Scenario Outline: Reject non-alphabetical shipping names and city
       Given the customer enables a different shipping address
       And the alternative shipping form uses these synthetic values:
@@ -133,14 +132,14 @@ Feature: Checkout addresses, account, and order scenarios
         | Town / City | City123   |
 
   Rule: AEC-22 order confirmation
-    @AEC-157 @phase-1 @pending
+    @AEC-157
     Scenario: Show order details after placing an order
       When the customer submits a valid order
       Then the customer is on the order-received page
       And the page shows the order number, date, status, total, and item details
 
   Rule: AEC-23 billing and payment
-    @AEC-148 @phase-2 @pending
+    @AEC-148
     Scenario Outline: Accept billing values at the field limits
       When the customer enters a billing "<field>" value with <limit> characters
       And the customer submits checkout
@@ -154,7 +153,7 @@ Feature: Checkout addresses, account, and order scenarios
         | Street address | 100   |
         | Phone          | 15    |
 
-    @AEC-148 @phase-2 @pending
+    @AEC-148
     Scenario Outline: Reject billing values over the field limits
       When the customer enters a billing "<field>" value with <limitPlusOne> characters
       And the customer submits checkout
@@ -169,7 +168,7 @@ Feature: Checkout addresses, account, and order scenarios
         | Street address | 101          |
         | Phone          | 16           |
 
-    @AEC-153 @phase-1 @pending
+    @AEC-153
     Scenario Outline: Reject a missing mandatory billing field
       When the customer submits checkout with the "<field>" billing field empty
       Then the customer remains on the checkout page
@@ -184,7 +183,7 @@ Feature: Checkout addresses, account, and order scenarios
         | ZIP Code       | Billing ZIP Code is a required field.    |
         | Email address  | Billing Email address is a required field. |
 
-    @AEC-23 @phase-2 @pending
+    @AEC-23
     Scenario Outline: Reject an invalid billing email
       When the customer submits checkout with email "<email>"
       Then the customer remains on the checkout page
@@ -194,7 +193,7 @@ Feature: Checkout addresses, account, and order scenarios
         | email       |
         | not-an-email |
 
-    @AEC-23 @phase-2 @pending
+    @AEC-23
     Scenario Outline: Reject an invalid billing phone number
       When the customer enters phone "<phone>"
       And the customer submits checkout
@@ -205,7 +204,7 @@ Feature: Checkout addresses, account, and order scenarios
         | phone        |
         | 555-CALL-NOW |
 
-    @AEC-23 @phase-2 @pending
+    @AEC-23
     Scenario Outline: Reject an invalid billing postcode
       When the customer enters postcode "<postcode>"
       And the customer submits checkout
@@ -216,7 +215,7 @@ Feature: Checkout addresses, account, and order scenarios
         | postcode |
         | INVALID! |
 
-    @AEC-156 @phase-2 @pending
+    @AEC-156
     Scenario Outline: Reject non-alphabetical billing names and city
       When the customer enters "<value>" in billing "<field>"
       And the customer submits checkout
@@ -230,7 +229,7 @@ Feature: Checkout addresses, account, and order scenarios
         | Town / City | City123   |
 
   Rule: AEC-20 account creation during checkout
-    @AEC-149 @phase-1 @pending
+    @AEC-149
     Scenario Outline: Create an account during a successful checkout
       Given the billing email is "<email>"
       When the guest enables account creation and enters username "<username>"
@@ -243,21 +242,21 @@ Feature: Checkout addresses, account, and order scenarios
         | username          | email                              |
         | qa-checkout-casey | qa.checkout@example.invalid       |
 
-    @AEC-149 @phase-2 @pending
+    @AEC-149
     Scenario: Require a username when creating an account
       Given an approved unique account email is configured
       When the guest enables account creation without entering a username
       Then the customer remains on checkout and the order is not placed
       And a required-field error is shown for the account username
 
-    @AEC-149 @phase-2 @pending
+    @AEC-149
     Scenario: Require a password when creating an account
       Given an approved account username is configured
       When the guest enables account creation and submits checkout with an empty account password
       Then the customer remains on checkout and the order is not placed
       And the checkout error is "Please enter an account password."
 
-    @AEC-149 @phase-2 @pending
+    @AEC-149
     Scenario Outline: Reject an invalid checkout account password
       Given an approved account username is configured
       And an approved unique account email is configured
@@ -275,7 +274,7 @@ Feature: Checkout addresses, account, and order scenarios
         | Qa!testx          |
         | Qa1testx          |
 
-    @AEC-149 @phase-2 @pending
+    @AEC-149
     Scenario Outline: Accept account passwords at the length limits
       Given the billing email is "<email>"
       When the guest enables account creation and enters username "<username>" and password "<password>"
@@ -287,7 +286,7 @@ Feature: Checkout addresses, account, and order scenarios
         | qa-checkout-min   | qa.checkout.min@example.invalid    | Qa1!test        |
         | qa-checkout-max   | qa.checkout.max@example.invalid    | Qa1!abcdefghijk |
 
-    @AEC-149 @phase-2 @pending
+    @AEC-149
     Scenario: Reject an already used account username
       Given an approved registered account username is configured
       And a different unique billing email is configured
@@ -296,7 +295,7 @@ Feature: Checkout addresses, account, and order scenarios
       Then the customer remains on checkout and the order is not placed
       And the checkout shows a username-already-in-use error
 
-    @AEC-149 @phase-2 @pending
+    @AEC-149
     Scenario: Reject an already registered billing email during account creation
       Given an approved account username is configured
       And an approved registered account email is configured

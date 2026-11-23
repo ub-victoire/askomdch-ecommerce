@@ -41,7 +41,7 @@ Feature: Checkout login and validation
       Then the customer remains on the checkout page
       And the incorrect-password error and lost-password link are displayed
 
-    @AEC-86 @phase-1
+    @AEC-86
     Scenario Outline: Reject an unregistered username
       When the customer submits the unregistered username "<username>" through checkout login
       Then the customer remains on the checkout page
@@ -51,7 +51,7 @@ Feature: Checkout login and validation
         | username                  |
         | qa-user-that-does-not-exist |
 
-    @AEC-86 @phase-1
+    @AEC-86
     Scenario Outline: Reject an unregistered email address
       When the customer submits the unregistered email address "<email>" through checkout login
       Then the customer remains on the checkout page

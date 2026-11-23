@@ -7,11 +7,11 @@ Feature: Checkout controls and order review
     And the customer opens checkout with that product
 
   Rule: AEC-17 returning customer login controls
-    @AEC-64 @phase-1
+    @AEC-64
     Scenario: Show the returning customer banner
       Then the returning customer banner is displayed
 
-    @AEC-69 @phase-1
+    @AEC-69
     Scenario: Expand and collapse the checkout login form
       When the customer opens the checkout login form
       Then the checkout login form is visible
@@ -25,7 +25,7 @@ Feature: Checkout controls and order review
       Then the customer is on the account password recovery page
 
   Rule: AEC-20 guest account creation controls
-    @AEC-149 @phase-1
+    @AEC-149
     Scenario: Show and hide the account creation fields
       Then account creation is unchecked and the username and password fields are hidden
       When the customer enables checkout account creation
@@ -34,7 +34,7 @@ Feature: Checkout controls and order review
       Then account creation is unchecked and the username and password fields are hidden
 
   Rule: AEC-21 alternative shipping address
-    @AEC-21 @phase-1
+    @AEC-21
     Scenario: Show and hide the alternative shipping form
       Then the alternative shipping checkbox is unchecked and its fields are hidden
       When the customer enables a different shipping address

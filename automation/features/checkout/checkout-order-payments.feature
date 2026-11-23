@@ -1,4 +1,3 @@
-@cart_session @checkout_order
 Feature: Place an order with each payment method
   These scenarios verify that checkout accepts each available payment method.
   Use approved test data and the site's test payment mode only.
@@ -10,7 +9,7 @@ Feature: Place an order with each payment method
     And the customer opens checkout with that product
 
   Rule: AEC-23 payment methods
-    @AEC-144 @AEC-145 @phase-1 @pending
+    @AEC-144 @AEC-145
     Scenario Outline: Place an order using each payment method
       Given the customer enters the billing details shown in the examples
       And the customer selects "<paymentMethod>"
