@@ -1,7 +1,8 @@
 @cart_session @checkout_order
-Feature: Checkout submission scenarios
-  Run only with authorized synthetic fixtures, test payments, and an approved cleanup process.
-  Pending scenarios still require stronger assertions and local fixture validation.
+Feature: Checkout addresses, account, and order scenarios
+  Each scenario checks a separate checkout behavior. Scenario outlines reuse
+  the same validation for different fields; they are not duplicate order flows.
+  Use approved test data and the site's test payment mode only.
 
   Background:
     Given the customer has a fresh browser session
@@ -11,7 +12,7 @@ Feature: Checkout submission scenarios
 
   Rule: AEC-21 alternative shipping
     @AEC-75
-    Scenario: Place an order with a valid alternative shipping address
+    Scenario: Submit an order with a different shipping address
       Given the approved checkout billing fixture is loaded
       And the approved alternative shipping fixture is loaded
       When the customer submits the order with the alternative shipping address
@@ -29,23 +30,23 @@ Feature: Checkout submission scenarios
 
       Examples:
         | field            |
-        | First Name       |
-        | Last Name        |
+        | First name       |
+        | Last name        |
         | Country / Region |
-        | Street Address   |
+        | Street address   |
         | Town / City      |
-        | State / County   |
-        | Postcode / ZIP   |
+        | State            |
+        | ZIP Code         |
 
     @AEC-118 @pending
-    Scenario: Accept documented maximum lengths for alternative shipping
+    Scenario: Accept the maximum length for alternative shipping fields
       Given the approved checkout billing fixture is loaded
       And the approved alternative shipping fixture is loaded
       And the alternative shipping fixture uses the documented maximum lengths:
-        | First Name     | 50  |
-        | Last Name      | 50  |
+        | First name     | 50  |
+        | Last name      | 50  |
         | Town / City    | 50  |
-        | Street Address | 100 |
+        | Street address | 100 |
         | Order Notes    | 500 |
       When the customer submits the order with that alternative shipping fixture
       Then the order is submitted with the alternative shipping address
@@ -61,19 +62,27 @@ Feature: Checkout submission scenarios
 
       Examples:
         | field       |
-        | First Name  |
-        | Last Name   |
+        | First name  |
+        | Last name   |
         | Town / City |
+
+  Rule: AEC-22 order confirmation
+    @AEC-157 @pending
+    Scenario: Show order details after placing an order
+      Given the approved checkout billing fixture is loaded
+      When the customer submits a valid order
+      Then the customer is on the order-received page
+      And the page shows the order number, date, status, total, and item details
 
   Rule: AEC-23 billing and payment
     @AEC-148 @pending
-    Scenario: Accept documented maximum lengths for billing fields
+    Scenario: Accept the maximum length for billing fields
       Given the approved checkout billing fixture is loaded
       And the billing fixture uses the documented maximum lengths:
-        | First Name     | 50  |
-        | Last Name      | 50  |
+        | First name     | 50  |
+        | Last name      | 50  |
         | Town / City    | 50  |
-        | Street Address | 100 |
+        | Street address | 100 |
         | Phone          | 15  |
       When the customer submits the order with that billing fixture
       Then the order is submitted with the billing details
@@ -89,41 +98,51 @@ Feature: Checkout submission scenarios
 
       Examples:
         | field            |
-        | First Name       |
-        | Last Name        |
+        | First name       |
+        | Last name        |
         | Country / Region |
-        | Street Address   |
+        | Street address   |
         | Town / City      |
-        | State / County   |
-        | Postcode / ZIP   |
-        | Phone            |
+        | State            |
+        | ZIP Code         |
         | Email Address    |
 
     @AEC-156 @pending
     Scenario Outline: Reject non-alphabetical billing names and city
       Given the approved checkout billing fixture is loaded
       When the customer submits checkout with non-alphabetical characters in billing "<field>"
-      Then the billing "<field>" is rejected
+      Then the customer remains on checkout
+      And the billing "<field>" is rejected with a field error
 
       Examples:
         | field       |
-        | First Name  |
-        | Last Name   |
+        | First name  |
+        | Last name   |
         | Town / City |
 
   Rule: AEC-20 account creation during checkout
     @AEC-149 @pending
     Scenario: Create an account during a successful checkout
       Given the approved checkout billing fixture is loaded
+      And an approved account username is configured
       And an approved unique billing email is configured
-      When the guest enables account creation and places the order
-      Then an account is created using the billing email as its login identifier
+      When the guest creates an account with that username and places the order
+      Then an account is created with the chosen username
       And the order is saved under the new account
-      And the customer is authenticated on the order-received page
+      And the customer is signed in on the order-received page
 
     @AEC-149 @pending
-    Scenario: Reject an empty checkout account password
+    Scenario: Require a username when creating an account
       Given the approved checkout billing fixture is loaded
+      And an approved unique billing email is configured
+      When the guest enables account creation without entering a username
+      Then the customer remains on checkout and the order is not placed
+      And a required-field error is shown for the account username
+
+    @AEC-149 @pending
+    Scenario: Require a password when creating an account
+      Given the approved checkout billing fixture is loaded
+      And an approved account username is configured
       And an approved unique billing email is configured
       When the guest enables account creation and submits checkout with an empty account password
       Then the customer remains on checkout and the order is not placed
@@ -132,6 +151,7 @@ Feature: Checkout submission scenarios
     @AEC-149 @pending
     Scenario Outline: Reject an invalid checkout account password
       Given the approved checkout billing fixture is loaded
+      And an approved account username is configured
       And an approved unique billing email is configured
       And an approved account password for "<validation>" is configured
       When the guest enables account creation and submits checkout with that password
@@ -150,6 +170,7 @@ Feature: Checkout submission scenarios
     @AEC-149 @pending
     Scenario: Reject an already registered billing email during account creation
       Given the approved checkout billing fixture is loaded
+      And an approved account username is configured
       And an approved registered billing email is configured
       When the guest enables account creation and submits checkout with that email
       Then the customer remains on checkout and the order is not placed

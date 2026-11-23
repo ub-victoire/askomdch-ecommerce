@@ -1,7 +1,7 @@
 @cart_session @checkout_order
-Feature: Checkout order payment methods
-  Scenarios derived from AEC-23 and linked Jira Tests.
-  Run only in an authorized non-production environment with test payments and cleanup.
+Feature: Place an order with each payment method
+  These scenarios verify that checkout accepts each available payment method.
+  Use approved test data and the site's test payment mode only.
 
   Background:
     Given the customer has a fresh browser session

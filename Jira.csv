@@ -1,0 +1,226 @@
+Summary,Issue key,Issue id,Issue Type,Status,Project key,Project name,Project type,Project lead,Project lead id,Project description,Priority,Resolution,Assignee,Assignee Id,Reporter,Reporter Id,Creator,Creator Id,Created,Updated,Last Viewed,Resolved,Due date,Votes,Labels,Description,Environment,Watchers,Watchers,Watchers Id,Watchers Id,Original estimate,Remaining Estimate,Time Spent,Work Ratio,Σ Original Estimate,Σ Remaining Estimate,Σ Time Spent,Security Level,Outward issue link (Defect),Outward issue link (Defect),Inward issue link (Test),Inward issue link (Test),Inward issue link (Test),Inward issue link (Test),Inward issue link (Test),Inward issue link (Test),Inward issue link (Test),Inward issue link (Test),Inward issue link (Test),Inward issue link (Test),Inward issue link (Test),Outward issue link (Test),Attachment,Custom field (Actual end),Custom field (Actual start),Custom field (Approvals),Custom field (Atlassian Project),Custom field (Change reason),Custom field (Change risk),Custom field (Change type),Custom field (Development),Custom field (Epic Color),Custom field (Epic Name),Custom field (Epic Status),Custom field (Focus Areas),Custom field (Goals),Custom field (Impact),Custom field (Incident manager),Custom field (Issue color),Custom field (Locked forms),Custom field (Open forms),Custom field (Project overview key),Custom field (Project overview status),Custom field (Rank),Custom field (Request Type),Custom field (Sentiment),Custom field (Severity),Custom field (Start date),Custom field (Status pages),Custom field (Story Points),Custom field (Story point estimate),Custom field (Submitted forms),Custom field (Target end),Custom field (Target start),Custom field (Team),Custom field (Total forms),Custom field (Vulnerability),Custom field (Work item created forms),Custom field ([CHART] Date of First Response),Custom field ([CHART] Time in Status),Comment,Parent,Parent key,Parent summary,Status category,Status category changed
+Return Customer Login During Checkout,AEC-17,10039,Story,To Do,AEC,Askom E-commerce,software,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,,High,,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,06/Nov/26 12:03 PM,10/Nov/26 11:52 AM,11/Nov/26 10:11 AM,,,0,,"As a Customer,
+
+I want to log in directly on the checkout page
+
+so that my billing and shipping information auto-fills without leaving the checkout flow.
+
+*Acceptance Criteria:*
+
+# Login Toggle Banner:
+## displays notice banner at top of {{/checkout}}: “Returning customer? Click here to login”
+## clicking “Click here to login” toggles open the inline login form container
+## clicking it again collapses the inline login form container
+# Username / Email field:
+## accepts registered username or email address
+## not empty
+# Password field:
+## accepts registered password that matches entered username or email
+## password should be displayed in dots
+## not empty
+# Remember Me Checkbox:
+## optional checkbox labeled “Remember me”
+## when checked, retains login session across browser sessions
+# Clicking “LOGIN” button:
+## If credentials are valid:
+### logs the customer into their account
+### reloads or updates checkout page dynamically
+### populates billing and shipping fields with customer’s saved address details
+### hides the “Returning customer?” banner
+## If credentials are invalid:
+### customer remains on the checkout page
+### if username/ email is empty, displays error message: “Error: Username is required”
+### If password is empty, displays error message: “Error: the password field is empyt”
+### If credentials do not much but username or email is registered, displays error message: “Error: the password you entered for the username {username} is incorrect. Lost your password?
+### If username is not registered in the system, displays error message: “The username *ad* is not registered on this site. If you are unsure of your username, try your email address instead.”
+### If email is not registered in the system, displays error message: “Unknown email address. Check again or try your username.”
+## Clicking “Lost your password” link:
+### redirects you to /account/lost-password/
+# Screenshot:
+
+!image-20261106-100339.png|width=574,alt=""image-20261106-100339.png""!",,Aline,,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,,,,,,,,,,,,AEC-64,AEC-69,AEC-71,AEC-73,AEC-79,AEC-82,AEC-86,AEC-99,AEC-103,AEC-105,AEC-109,,06/Nov/26 12:03 PM;8f34b363-8e83-41fc-b0ab-7ba8f301f898;image-20261106-100339.png;https://alinek04.atlassian.net/rest/api/3/attachment/content/10027,,,ApprovalsCFValue{approvals=[]},,,,,{},,,,,,,,,,,,,0|i0008j:,,,,,,,5.0,,,,,,,,,,,10026,AEC-4,Checkout,To Do,06/Nov/26 12:03 PM
+Account Creation During Checkout,AEC-20,10042,Story,To Do,AEC,Askom E-commerce,software,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,,Medium,,VICTOIRE USHINDI,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,06/Nov/26 12:46 PM,11/Nov/26 10:41 AM,11/Nov/26 10:41 AM,,,0,,"As a Customer,
+
+I want to create an account while completing my checkout
+
+so that my order details and profile are saved for future purchases without a separate registration step.
+
+*Acceptance Criteria:*
+
+# Create Account Checkbox:
+## visible only to non-logged-in (guest) shoppers
+## labeled “Create an account?”
+## unchecked by default
+# Account Password Field:
+## hidden when “Create an account?” checkbox is unchecked
+## dynamically unfolds when “Create an account?” is checked
+## minimum 8 characters, maximum 15 characters
+## requires mixed uppercase, lowercase, numbers, and special characters
+## field is mandatory if “create an account is checked
+# Processing Order submission:
+## If “Create an account?” is checked and password is valid:
+### system registers a new account using the billing email address as username/login identifier
+### system saves order under the newly generated user ID
+### customer is automatically authenticated upon redirection to {{/checkout/order-received/}}
+## If “Create an account?” is checked and password is empty or invalid:
+### order is not placed and customer stays on the checkout page
+### if empty, displays error message: “Please enter an account password.”
+### if complexity rules fail, displays error message: “Password must be 8-15 characters and contain uppercase, lowercase, numbers, and special characters.”
+### if billing email is already registered, displays error message: “An account is already registered with your email address. Please log in.”
+
+*Screenshot:*
+
+!image-20261106-104732.png|width=267,alt=""image-20261106-104732.png""!",,Aline,,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,,,,,,,,,,,,AEC-149,,,,,,,,,,,,06/Nov/26 12:47 PM;8f34b363-8e83-41fc-b0ab-7ba8f301f898;image-20261106-104732.png;https://alinek04.atlassian.net/rest/api/3/attachment/content/10033,,,ApprovalsCFValue{approvals=[]},,,,,{},,,,,,,,,,,,,0|i00097:,,,,,,,5.0,,,,,,,,,,,10026,AEC-4,Checkout,To Do,06/Nov/26 12:46 PM
+Alternative Shipping Address,AEC-21,10043,Story,To Do,AEC,Askom E-commerce,software,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,,Highest,,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,06/Nov/26 12:57 PM,10/Nov/26 4:32 PM,,,,0,,"As a Customer,
+
+I want to enter a different delivery address from my billing address
+
+so that my order can be delivered to another recipient or destination.
+
+*Acceptance Criteria:*
+
+# Alternative Shipping Toggle:
+## labeled “Ship to a different address?” with a checkbox
+## unchecked by default; shipping destination defaults to billing address
+## clicking the checkbox unfolds the secondary shipping address form
+## unchecking collapses the form and reverts shipping destination back to billing address
+# Shipping Form Fields (when checkbox is checked):
+## First Name: alphabetical characters only, mandatory, max 50 chars
+## Last Name: alphabetical characters only, mandatory, max 50 chars
+## Country / Region: mandatory dropdown selection
+## Street Address: alphanumeric characters, mandatory, max 100 chars
+## Town / City: alphabetical characters only, mandatory, max 50 chars
+## State / County: dropdown or text input according to selected country, mandatory where applicable
+## Postcode / ZIP: valid alphanumeric postal format, mandatory
+## Order Notes: optional text area for delivery instructions, max 500 chars
+# Form Submission Validation:
+## If all mandatory secondary fields are filled correctly:
+### order submits with secondary address stored as recipient destination
+###  {{/checkout/order-received/}} displays secondary shipping address under “Shipping address” panel
+## If any mandatory secondary field is empty or invalid:
+### Customer stays on the checkout page
+### invalid fields are highlighted with a red outline
+### displays specific error message at the top (e.g., “Shipping First name is a required field.”, “Shipping Street address is a required field.”)
+
+*Screenshot:*
+
+!image-20261106-105633.png|width=414,alt=""image-20261106-105633.png""!",,Aline,,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,,,,,,,,,,,,AEC-75,AEC-121,AEC-118,AEC-117,,,,,,,,,06/Nov/26 12:57 PM;8f34b363-8e83-41fc-b0ab-7ba8f301f898;image-20261106-105633.png;https://alinek04.atlassian.net/rest/api/3/attachment/content/10034,,,ApprovalsCFValue{approvals=[]},,,,,{},,,,,,,,,,,,,0|i0009j:,,,,,,,8.0,,,,,,,,,,,10026,AEC-4,Checkout,To Do,06/Nov/26 12:57 PM
+Order review,AEC-22,10044,Story,To Do,AEC,Askom E-commerce,software,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,,Highest,,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,06/Nov/26 1:22 PM,11/Nov/26 11:56 AM,,,,0,,"As a Customer,
+
+I want to review my order summary and line items before placing the order
+
+so that I can confirm quantities, price calculations, discounts, and final totals.
+
+*Acceptance Criteria:*
+
+# Order Summary Table Display:
+## displays table titled “Your order”
+## header columns display: “Product” and “Subtotal”
+## each line item displays: product name, multiplier indicator, purchased quantity ({{Product Name × Qty}}), and calculated row total
+# Totals Calculation Breakdown:
+## Subtotal row displays sum of all item subtotals
+## Shipping row displays selected shipping method and shipping fee (or “Free shipping”)
+## State Tax row displays the amount of tax to be paid, if any.
+## Total row displays bold final payable price formatted in store currency ({{$}})
+# Clicking “PLACE ORDER” button:
+## If order summary is validated and terms are accepted:
+### order is submitted and inventory is deducted
+### customer is redirected to {{/checkout/order-received/{order_id}/}}
+### page displays order number, date, status, total amount, and item breakdown
+
+*Screenshot:*
+
+!image-20261106-112340.png|width=233,alt=""image-20261106-112340.png""!",,Aline,,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,,,,,,,,,,,,AEC-157,,,,,,,,,,,,06/Nov/26 1:23 PM;8f34b363-8e83-41fc-b0ab-7ba8f301f898;image-20261106-112340.png;https://alinek04.atlassian.net/rest/api/3/attachment/content/10035,,,ApprovalsCFValue{approvals=[]},,,,,{},,,,,,,,,,,,,0|i0009n:,,,,,,,8.0,,,,,,,,,,,10026,AEC-4,Checkout,To Do,06/Nov/26 1:22 PM
+Billing Details & Payment method,AEC-23,10045,Story,To Do,AEC,Askom E-commerce,software,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,,Highest,,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,06/Nov/26 2:38 PM,11/Nov/26 11:20 AM,,,,0,,"As a Customer, 
+
+I want to enter my billing address and select my preferred payment method
+
+so that my order can be processed and billed correctly.
+
+*Acceptance Criteria:*
+
+# Billing Form Fields:
+## First Name: alphabetical characters only, not empty, maximum 50 characters
+## Last Name: alphabetical characters only, not empty, maximum 50 characters
+## Country / Region: mandatory dropdown selection
+## Street Address: alphanumeric characters, not empty, maximum 100 characters
+## Town / City: alphabetical characters only, not empty, maximum 50 characters
+## State / County: dropdown or text input according to selected country, mandatory where applicable
+## Postcode / ZIP: valid alphanumeric postal format, not empty
+## Phone: numerical characters with optional {{+}} prefix, not empty, 10 to 15 digits
+## Email Address: valid email format (regex), not empty
+# Payment Method selection:
+## displays payment gateway options via radio buttons: “Direct bank transfer” and “Cash on delivery”
+## exactly one payment method must be selected at all times
+## “Direct bank transfer” is selected by default on page load
+## selecting a radio button displays its corresponding instructional message box and collapses the other
+# Form validation errors:
+## if any mandatory billing field is empty:
+### Customer remains on {{/checkout/}}
+### system displays error message at the top: “Billing {Field Name} is a required field.”
+### highlights the missing field with a red border
+## if email address format is invalid:
+### Customer remains on {{/checkout/}}
+### system displays error message: “Invalid billing email address”
+## if phone number contains letters or invalid characters:
+### Customer remains on {{/checkout/}}
+### system displays error message: “Please enter a valid phone number.”
+
+*Screenshot:*
+
+!image-20261106-123752.png|width=523,alt=""image-20261106-123752.png""!",,Aline,Christian,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,712020:df18ac8e-5a94-43e4-80cf-b6ec4082b8d8,,,,,,,,,,,AEC-144,AEC-156,AEC-153,AEC-148,AEC-145,,,,,,,,06/Nov/26 2:38 PM;8f34b363-8e83-41fc-b0ab-7ba8f301f898;image-20261106-123752.png;https://alinek04.atlassian.net/rest/api/3/attachment/content/10036,,,ApprovalsCFValue{approvals=[]},,,,,{},,,,,,,,,,,,,0|i0009y:,,,,,,,8.0,,,,,,,,2026-11-06 12:43:26.681,,06/Nov/26 2:43 PM;712020:df18ac8e-5a94-43e4-80cf-b6ec4082b8d8;you don’t need to specify the endpoint. Good work so far[~accountid:712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd] ,10026,AEC-4,Checkout,To Do,06/Nov/26 2:38 PM
+Checkout Test Set,AEC-63,10116,Test Set,To Do,AEC,Askom E-commerce,software,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,,Medium,,VICTOIRE USHINDI,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,VICTOIRE USHINDI,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,VICTOIRE USHINDI,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,10/Nov/26 9:45 AM,10/Nov/26 11:54 AM,10/Nov/26 2:15 PM,,,0,,"Contains functional tests for checkout workflows, including returning-customer authentication during checkout, billing and shipping details, guest and registered checkout, order review, payment selection and order placement.",,VICTOIRE USHINDI,,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,,,,,,,,,,,,,,,,,,,,,,,,,,,ApprovalsCFValue{approvals=[]},,,,,{},,,,,,,,,,,,,0|i000ie:,,,,,,,,,,,,,,,,,,10026,AEC-4,Checkout,To Do,10/Nov/26 9:45 AM
+Smoke Test Set,AEC-113,10166,Test Set,To Do,AEC,Askom E-commerce,software,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,,Medium,,VICTOIRE USHINDI,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,VICTOIRE USHINDI,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,VICTOIRE USHINDI,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,10/Nov/26 11:58 AM,10/Nov/26 4:07 PM,11/Nov/26 10:27 AM,,,0,,"*Purpose:*
+The Smoke Test Set contains a selected group of high-priority test cases designed to verify that the essential functionalities of the AskOmDch e-commerce application are working correctly after a new build or deployment.
+
+*Scope:*
+The test cases cover the most critical customer journeys, including:
+
+* Customer registration and login.
+* Product browsing and search.
+* Adding products to the cart.
+* Reviewing and updating cart contents.
+* Accessing checkout.
+* Returning-customer login during checkout.
+* Reviewing order details and selecting a payment method.
+* Completing an order and receiving confirmation.
+
+*Selection Criteria:*
+Only critical and high-priority test cases that validate the application's core functionality and allow further testing to proceed should be included.
+
+*Expected Outcome:*
+The Smoke Test Set should provide an early indication of whether the application is stable enough for more extensive functional testing. Any critical failure should be investigated before proceeding with further testing.",,VICTOIRE USHINDI,,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,,,,,,,,,,,,,,,,,,,,,,,,,,,ApprovalsCFValue{approvals=[]},,,,,{},,,,,,,,,,,,,0|i000t0:,,,,,,,,,,,,,,,,,,10026,AEC-4,Checkout,To Do,10/Nov/26 11:58 AM
+Regression Test Set,AEC-116,10169,Test Set,To Do,AEC,Askom E-commerce,software,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,,Medium,,VICTOIRE USHINDI,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,VICTOIRE USHINDI,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,VICTOIRE USHINDI,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,10/Nov/26 12:14 PM,10/Nov/26 4:08 PM,11/Nov/26 10:30 AM,,,0,,"*Purpose:*
+The Regression Test Set contains previously designed and validated test cases used to verify that existing AskOmDch e-commerce functionalities continue to work correctly after application changes, bug fixes, enhancements or new deployments.
+
+*Scope:*
+The test cases cover the four main functional areas:
+
+* Account Management.
+* Product Browsing.
+* Cart Management.
+* Checkout.
+
+*Selection Criteria:*
+Test cases are selected based on the risk of regression, business importance, dependencies between functionalities and the potential impact of changes on existing features.
+
+Priority should be given to critical customer journeys, previously identified defects and functionalities that may be affected by code changes.
+
+*Expected Outcome:*
+The Regression Test Set should help identify unintended side effects caused by application changes and provide confidence that previously working functionalities remain stable.",,VICTOIRE USHINDI,,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,,,,,,,,,,,,,,,,,,,,,,,,,,,ApprovalsCFValue{approvals=[]},,,,,{},,,,,,,,,,,,,0|i000tl:,,,,,,,,,,,,,,,,,,10026,AEC-4,Checkout,To Do,10/Nov/26 12:14 PM
+FUNCTIONAL TESTING SPRINT1 - Checkout,AEC-142,10195,Test Execution,To Do,AEC,Askom E-commerce,software,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,,Medium,,VICTOIRE USHINDI,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,VICTOIRE USHINDI,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,VICTOIRE USHINDI,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,10/Nov/26 7:01 PM,11/Nov/26 1:20 PM,20/Nov/26 4:40 PM,,,0,,"This Test Execution covers the manual functional testing of the Checkout Epic for Sprint 1.
+
+Scope:
+
+* Return Customer Login During Checkout
+* Account Creation During Checkout
+* Alternative Shipping Address
+* Order Review
+* Billing Details and Payment Method
+
+Test cases are selected from the Checkout Test Set and included in the FUNCTIONAL TESTING SPRINT1 Test Plan.
+
+Execution approach: Manual testing using a web browser.
+
+Purpose: Validate the Checkout functionality against the defined user stories and acceptance criteria, record actual results, capture evidence, and report confirmed defects.",,VICTOIRE USHINDI,,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,,,,,,,,,,AEC-159,AEC-160,,,,,,,,,,,,,,,,ApprovalsCFValue{approvals=[]},,,,,{},,,,,,,,,,,,,0|i000zk:,,,,,,,,,,,,,,,,,,10026,AEC-4,Checkout,To Do,10/Nov/26 7:01 PM
+Account Creation During Checkout,AEC-149,10202,Test,To Do,AEC,Askom E-commerce,software,Aline,712020:d1989e07-cd15-48bb-a4c8-2d0b4a7388fd,,High,,VICTOIRE USHINDI,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,VICTOIRE USHINDI,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,VICTOIRE USHINDI,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,11/Nov/26 10:14 AM,11/Nov/26 10:41 AM,11/Nov/26 10:41 AM,,,0,positive,"Verify account creation during checkout, password validation, and duplicate-email",,VICTOIRE USHINDI,,712020:d72cb6ce-9079-4803-a684-d23295fb9bbc,,,,,,,,,,,,,,,,,,,,,,,AEC-20,,,,ApprovalsCFValue{approvals=[]},,,,,{},,,,,,,,,,,,,0|i0010w:,,,Normal,,,,,,,,,,,,,,,10026,AEC-4,Checkout,To Do,11/Nov/26 10:14 AM

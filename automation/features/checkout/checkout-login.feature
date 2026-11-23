@@ -1,5 +1,5 @@
 @cart_session @checkout_login
-Feature: Checkout login scenarios
+Feature: Checkout login and validation
 
   Background:
     Given the customer has a fresh browser session
@@ -8,7 +8,7 @@ Feature: Checkout login scenarios
     And the customer opens checkout with that product
     And the customer opens the checkout login form
 
-  Rule: AEC-17 registered customer login
+  Rule: AEC-17 saved account details and session
     @AEC-103
     Scenario: Saved addresses populate after checkout login
       Given an approved registered test account has known saved billing and shipping addresses
@@ -24,36 +24,30 @@ Feature: Checkout login scenarios
 
   Rule: AEC-17 invalid checkout login
     @AEC-79
-    Scenario Outline: Required login fields show their specified errors
+    Scenario Outline: Show an error when a required login field is empty
       When the customer submits checkout login with an empty "<field>" field
       Then the customer remains on the checkout page
       And the checkout login displays "<message>"
 
       Examples:
-        | field            | message                            |
-        | username or email | Error: Username is required         |
-        | password          | Error: the password field is empyt  |
+        | field             | message                            |
+        | username or email | Error: Username is required.        |
+        | password          | Error: The password field is empty. |
 
-    @AEC-82
+    @AEC-82 @AEC-109
     Scenario: Reject an incorrect password for a registered account
       Given an approved registered test account is available
       When the customer submits its username with an incorrect password
       Then the customer remains on the checkout page
-      And the AEC-17 incorrect-password error and lost-password link are displayed
+      And the incorrect-password error and lost-password link are displayed
 
     @AEC-86
-    Scenario Outline: Reject an unregistered username or email
+    Scenario Outline: Reject an unregistered username or email address
       When the customer submits an unregistered "<identifier>" through checkout login
       Then the customer remains on the checkout page
       And the checkout login displays "<message>"
 
       Examples:
         | identifier | message |
-        | username   | The username ad is not registered on this site. If you are unsure of your username, try your email address instead. |
+        | username   | The username is not registered on this site. If you are unsure of your username, try your email address instead. |
         | email      | Unknown email address. Check again or try your username. |
-
-    @AEC-109
-    Scenario: Failed login stays on checkout
-      Given an approved registered test account is available
-      When the customer submits its username with an incorrect password
-      Then the customer remains on the checkout page
