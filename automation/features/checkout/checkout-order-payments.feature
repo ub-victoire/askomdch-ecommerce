@@ -8,16 +8,16 @@ Feature: Place an order with each payment method
     And the customer adds the configured product to the cart
     And the cart contains one unit of the selected product
     And the customer opens checkout with that product
-    And the approved checkout billing fixture is loaded
 
   Rule: AEC-23 payment methods
-    @AEC-144
-    Scenario: Place an order using the default payment method
-      Given direct bank transfer is selected by default
+    @AEC-144 @AEC-145 @phase-1 @pending
+    Scenario Outline: Place an order using each payment method
+      Given the customer enters the billing details shown in the examples
+      And the customer selects "<paymentMethod>"
       When the customer places the order
-      Then the order is submitted using direct bank transfer
+      Then the order is submitted using "<paymentMethod>"
 
-    @AEC-145
-    Scenario: Place an order using cash on delivery
-      When the customer selects cash on delivery and places the order
-      Then the order is submitted using cash on delivery
+      Examples:
+        | firstName | lastName | country       | streetAddress   | city      | state      | postcode | email                         | paymentMethod       |
+        | Casey     | Example  | United States | 123 Test Street | Testville | California | 90210    | qa.checkout@example.invalid   | Direct bank transfer |
+        | Casey     | Example  | United States | 123 Test Street | Testville | California | 90210    | qa.checkout@example.invalid   | Cash on delivery     |

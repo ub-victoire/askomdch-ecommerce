@@ -1,3 +1,4 @@
+@phase-1
 Feature: Returning customer checkout login
 
   Background:

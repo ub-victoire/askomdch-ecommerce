@@ -9,169 +9,297 @@ Feature: Checkout addresses, account, and order scenarios
     And the customer adds the configured product to the cart
     And the cart contains one unit of the selected product
     And the customer opens checkout with that product
+    And the billing form uses these synthetic values:
+      | First name     | Casey                      |
+      | Last name      | Example                    |
+      | Country        | United States              |
+      | Street address | 123 Test Street            |
+      | Town / City    | Testville                  |
+      | State          | California                 |
+      | ZIP Code       | 90210                      |
+      | Phone          | +15555550199               |
+      | Email address  | qa.checkout@example.invalid |
 
   Rule: AEC-21 alternative shipping
-    @AEC-75
-    Scenario: Submit an order with a different shipping address
-      Given the approved checkout billing fixture is loaded
-      And the approved alternative shipping fixture is loaded
+    @AEC-75 @phase-1 @pending
+    Scenario Outline: Submit an order with a different shipping address
+      Given the customer enables a different shipping address
+      And the alternative shipping form uses these synthetic values:
+        | First name     | <shippingFirstName> |
+        | Last name      | <shippingLastName> |
+        | Country        | United States |
+        | Street address | <shippingAddress> |
+        | Town / City    | <shippingCity> |
+        | State          | California |
+        | ZIP Code       | <shippingPostcode> |
       When the customer submits the order with the alternative shipping address
-      Then the order-received shipping address matches the alternative shipping fixture
-
-    @AEC-117 @pending
-    Scenario Outline: Reject a missing mandatory shipping field
-      Given the approved checkout billing fixture is loaded
-      And the approved alternative shipping fixture is loaded
-      And the selected country requires the "<field>" shipping field
-      When the customer submits checkout with the "<field>" shipping field empty
-      Then the customer remains on the checkout page
-      And the "<field>" shipping field is highlighted with a red outline
-      And a specific shipping field error is displayed
+      Then the order-received shipping address matches those values
 
       Examples:
-        | field            |
-        | First name       |
-        | Last name        |
-        | Country / Region |
-        | Street address   |
-        | Town / City      |
-        | State            |
-        | ZIP Code         |
+        | shippingFirstName | shippingLastName | shippingAddress      | shippingCity | shippingPostcode |
+        | Taylor            | Sample            | 456 Sample Avenue    | Sampletown   | 90211            |
 
-    @AEC-118 @pending
-    Scenario: Accept the maximum length for alternative shipping fields
-      Given the approved checkout billing fixture is loaded
-      And the approved alternative shipping fixture is loaded
-      And the alternative shipping fixture uses the documented maximum lengths:
-        | First name     | 50  |
-        | Last name      | 50  |
-        | Town / City    | 50  |
-        | Street address | 100 |
-        | Order Notes    | 500 |
-      When the customer submits the order with that alternative shipping fixture
-      Then the order is submitted with the alternative shipping address
+    @AEC-117 @phase-1 @pending
+    Scenario Outline: Reject a missing mandatory shipping field
+      Given the customer enables a different shipping address
+      And the alternative shipping form uses these synthetic values:
+        | First name     | Taylor            |
+        | Last name      | Sample            |
+        | Country        | United States     |
+        | Street address | 456 Sample Avenue |
+        | Town / City    | Sampletown        |
+        | State          | California        |
+        | ZIP Code       | 90211             |
+      When the customer submits checkout with the "<field>" shipping field empty
+      Then the customer remains on the checkout page
+      And the checkout shows "<error>"
 
-    @AEC-121 @pending
+      Examples:
+        | field          | error                                      |
+        | First name     | Shipping First name is a required field.  |
+        | Last name      | Shipping Last name is a required field.   |
+        | Street address | Shipping Street address is a required field. |
+        | Town / City    | Shipping Town / City is a required field. |
+        | ZIP Code       | Shipping ZIP Code is a required field.    |
+
+    @AEC-118 @phase-2 @pending
+    Scenario Outline: Accept values at the alternative shipping field limits
+      Given the customer enables a different shipping address
+      And the alternative shipping form uses these synthetic values:
+        | First name     | Taylor            |
+        | Last name      | Sample            |
+        | Country        | United States     |
+        | Street address | 456 Sample Avenue |
+        | Town / City    | Sampletown        |
+        | State          | California        |
+        | ZIP Code       | 90211             |
+      When the customer enters a shipping "<field>" value at the documented limit of <limit> characters
+      And the customer submits checkout
+      Then the shipping "<field>" value is accepted
+
+      Examples:
+        | field          | limit |
+        | First name     | 50    |
+        | Last name      | 50    |
+        | Town / City    | 50    |
+        | Street address | 100   |
+        | Order notes    | 500   |
+
+    @AEC-118 @phase-2 @pending
+    Scenario Outline: Reject alternative shipping values over the field limits
+      Given the customer enables a different shipping address
+      And the alternative shipping form uses these synthetic values:
+        | First name     | Taylor            |
+        | Last name      | Sample            |
+        | Country        | United States     |
+        | Street address | 456 Sample Avenue |
+        | Town / City    | Sampletown        |
+        | State          | California        |
+        | ZIP Code       | 90211             |
+      When the customer enters a shipping "<field>" value with <limitPlusOne> characters
+      And the customer submits checkout
+      Then the customer remains on the checkout page
+      And the shipping "<field>" value is rejected
+
+      Examples:
+        | field          | limitPlusOne |
+        | First name     | 51           |
+        | Last name      | 51           |
+        | Town / City    | 51           |
+        | Street address | 101          |
+        | Order notes    | 501          |
+
+    @AEC-121 @phase-2 @pending
     Scenario Outline: Reject non-alphabetical shipping names and city
-      Given the approved checkout billing fixture is loaded
-      And the approved alternative shipping fixture is loaded
-      When the customer submits checkout with non-alphabetical characters in shipping "<field>"
+      Given the customer enables a different shipping address
+      And the alternative shipping form uses these synthetic values:
+        | First name     | Taylor            |
+        | Last name      | Sample            |
+        | Country        | United States     |
+        | Street address | 456 Sample Avenue |
+        | Town / City    | Sampletown        |
+        | State          | California        |
+        | ZIP Code       | 90211             |
+      When the customer enters "<value>" in shipping "<field>"
+      And the customer submits checkout
       Then the customer remains on the checkout page
       And the invalid shipping "<field>" is highlighted with a red outline
       And a specific shipping field error is displayed
 
       Examples:
-        | field       |
-        | First name  |
-        | Last name   |
-        | Town / City |
+        | field       | value     |
+        | First name  | Taylor123 |
+        | Last name   | Sample123 |
+        | Town / City | City123   |
 
   Rule: AEC-22 order confirmation
-    @AEC-157 @pending
+    @AEC-157 @phase-1 @pending
     Scenario: Show order details after placing an order
-      Given the approved checkout billing fixture is loaded
       When the customer submits a valid order
       Then the customer is on the order-received page
       And the page shows the order number, date, status, total, and item details
 
   Rule: AEC-23 billing and payment
-    @AEC-148 @pending
-    Scenario: Accept the maximum length for billing fields
-      Given the approved checkout billing fixture is loaded
-      And the billing fixture uses the documented maximum lengths:
-        | First name     | 50  |
-        | Last name      | 50  |
-        | Town / City    | 50  |
-        | Street address | 100 |
-        | Phone          | 15  |
-      When the customer submits the order with that billing fixture
-      Then the order is submitted with the billing details
-
-    @AEC-153 @pending
-    Scenario Outline: Reject a missing mandatory billing field
-      Given the approved checkout billing fixture is loaded
-      And the selected country requires the "<field>" billing field
-      When the customer submits checkout with the "<field>" billing field empty
-      Then the customer remains on the checkout page
-      And the "<field>" billing field has a red border
-      And the AEC-23 required-field error is displayed for billing "<field>"
+    @AEC-148 @phase-2 @pending
+    Scenario Outline: Accept billing values at the field limits
+      When the customer enters a billing "<field>" value with <limit> characters
+      And the customer submits checkout
+      Then the billing "<field>" value is accepted
 
       Examples:
-        | field            |
-        | First name       |
-        | Last name        |
-        | Country / Region |
-        | Street address   |
-        | Town / City      |
-        | State            |
-        | ZIP Code         |
-        | Email Address    |
+        | field          | limit |
+        | First name     | 50    |
+        | Last name      | 50    |
+        | Town / City    | 50    |
+        | Street address | 100   |
+        | Phone          | 15    |
 
-    @AEC-156 @pending
+    @AEC-148 @phase-2 @pending
+    Scenario Outline: Reject billing values over the field limits
+      When the customer enters a billing "<field>" value with <limitPlusOne> characters
+      And the customer submits checkout
+      Then the customer remains on the checkout page
+      And the billing "<field>" value is rejected
+
+      Examples:
+        | field          | limitPlusOne |
+        | First name     | 51           |
+        | Last name      | 51           |
+        | Town / City    | 51           |
+        | Street address | 101          |
+        | Phone          | 16           |
+
+    @AEC-153 @phase-1 @pending
+    Scenario Outline: Reject a missing mandatory billing field
+      When the customer submits checkout with the "<field>" billing field empty
+      Then the customer remains on the checkout page
+      And the checkout shows "<error>"
+
+      Examples:
+        | field          | error                                     |
+        | First name     | Billing First name is a required field.  |
+        | Last name      | Billing Last name is a required field.   |
+        | Street address | Billing Street address is a required field. |
+        | Town / City    | Billing Town / City is a required field. |
+        | ZIP Code       | Billing ZIP Code is a required field.    |
+        | Email address  | Billing Email address is a required field. |
+
+    @AEC-23 @phase-2 @pending
+    Scenario Outline: Reject an invalid billing email
+      When the customer submits checkout with email "<email>"
+      Then the customer remains on the checkout page
+      And the checkout shows "Invalid billing email address"
+
+      Examples:
+        | email       |
+        | not-an-email |
+
+    @AEC-23 @phase-2 @pending
+    Scenario Outline: Reject an invalid billing phone number
+      When the customer enters phone "<phone>"
+      And the customer submits checkout
+      Then the customer remains on the checkout page
+      And a billing phone validation error is displayed
+
+      Examples:
+        | phone        |
+        | 555-CALL-NOW |
+
+    @AEC-23 @phase-2 @pending
+    Scenario Outline: Reject an invalid billing postcode
+      When the customer enters postcode "<postcode>"
+      And the customer submits checkout
+      Then the customer remains on the checkout page
+      And a billing postcode validation error is displayed
+
+      Examples:
+        | postcode |
+        | INVALID! |
+
+    @AEC-156 @phase-2 @pending
     Scenario Outline: Reject non-alphabetical billing names and city
-      Given the approved checkout billing fixture is loaded
-      When the customer submits checkout with non-alphabetical characters in billing "<field>"
+      When the customer enters "<value>" in billing "<field>"
+      And the customer submits checkout
       Then the customer remains on checkout
       And the billing "<field>" is rejected with a field error
 
       Examples:
-        | field       |
-        | First name  |
-        | Last name   |
-        | Town / City |
+        | field       | value     |
+        | First name  | Casey123  |
+        | Last name   | Example123 |
+        | Town / City | City123   |
 
   Rule: AEC-20 account creation during checkout
-    @AEC-149 @pending
-    Scenario: Create an account during a successful checkout
-      Given the approved checkout billing fixture is loaded
-      And an approved account username is configured
-      And an approved unique billing email is configured
-      When the guest creates an account with that username and places the order
+    @AEC-149 @phase-1 @pending
+    Scenario Outline: Create an account during a successful checkout
+      Given the billing email is "<email>"
+      When the guest enables account creation and enters username "<username>"
+      And the customer places the order
       Then an account is created with the chosen username
       And the order is saved under the new account
       And the customer is signed in on the order-received page
 
-    @AEC-149 @pending
+      Examples:
+        | username          | email                              |
+        | qa-checkout-casey | qa.checkout@example.invalid       |
+
+    @AEC-149 @phase-2 @pending
     Scenario: Require a username when creating an account
-      Given the approved checkout billing fixture is loaded
-      And an approved unique billing email is configured
+      Given an approved unique account email is configured
       When the guest enables account creation without entering a username
       Then the customer remains on checkout and the order is not placed
       And a required-field error is shown for the account username
 
-    @AEC-149 @pending
+    @AEC-149 @phase-2 @pending
     Scenario: Require a password when creating an account
-      Given the approved checkout billing fixture is loaded
-      And an approved account username is configured
-      And an approved unique billing email is configured
+      Given an approved account username is configured
       When the guest enables account creation and submits checkout with an empty account password
       Then the customer remains on checkout and the order is not placed
       And the checkout error is "Please enter an account password."
 
-    @AEC-149 @pending
+    @AEC-149 @phase-2 @pending
     Scenario Outline: Reject an invalid checkout account password
-      Given the approved checkout billing fixture is loaded
-      And an approved account username is configured
-      And an approved unique billing email is configured
-      And an approved account password for "<validation>" is configured
-      When the guest enables account creation and submits checkout with that password
+      Given an approved account username is configured
+      And an approved unique account email is configured
+      When the guest enables account creation and uses password "<password>"
+      And the guest submits checkout
       Then the customer remains on checkout and the order is not placed
       And the checkout error is "Password must be 8-15 characters and contain uppercase, lowercase, numbers, and special characters."
 
       Examples:
-        | validation       |
-        | below_minimum    |
-        | above_maximum    |
-        | missing_uppercase |
-        | missing_lowercase |
-        | missing_number    |
-        | missing_special   |
+        | password          |
+        | Qa1!              |
+        | Qa1!abcdefghijkl  |
+        | qa1!test          |
+        | QA1!TEST          |
+        | Qa!testx          |
+        | Qa1testx          |
 
-    @AEC-149 @pending
+    @AEC-149 @phase-2 @pending
+    Scenario Outline: Accept account passwords at the length limits
+      Given the billing email is "<email>"
+      When the guest enables account creation and enters username "<username>" and password "<password>"
+      And the customer submits the order
+      Then the account is created and the order is submitted
+
+      Examples:
+        | username          | email                               | password        |
+        | qa-checkout-min   | qa.checkout.min@example.invalid    | Qa1!test        |
+        | qa-checkout-max   | qa.checkout.max@example.invalid    | Qa1!abcdefghijk |
+
+    @AEC-149 @phase-2 @pending
+    Scenario: Reject an already used account username
+      Given an approved registered account username is configured
+      And a different unique billing email is configured
+      When the guest creates an account using that username
+      And the customer submits checkout
+      Then the customer remains on checkout and the order is not placed
+      And the checkout shows a username-already-in-use error
+
+    @AEC-149 @phase-2 @pending
     Scenario: Reject an already registered billing email during account creation
-      Given the approved checkout billing fixture is loaded
-      And an approved account username is configured
-      And an approved registered billing email is configured
+      Given an approved account username is configured
+      And an approved registered account email is configured
       When the guest enables account creation and submits checkout with that email
       Then the customer remains on checkout and the order is not placed
       And the checkout error is "An account is already registered with your email address. Please log in."

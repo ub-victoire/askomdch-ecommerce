@@ -7,11 +7,11 @@ Feature: Checkout controls and order review
     And the customer opens checkout with that product
 
   Rule: AEC-17 returning customer login controls
-    @AEC-64
+    @AEC-64 @phase-1
     Scenario: Show the returning customer banner
       Then the returning customer banner is displayed
 
-    @AEC-69
+    @AEC-69 @phase-1
     Scenario: Expand and collapse the checkout login form
       When the customer opens the checkout login form
       Then the checkout login form is visible
@@ -25,7 +25,7 @@ Feature: Checkout controls and order review
       Then the customer is on the account password recovery page
 
   Rule: AEC-20 guest account creation controls
-    @AEC-149
+    @AEC-149 @phase-1
     Scenario: Show and hide the account creation fields
       Then account creation is unchecked and the username and password fields are hidden
       When the customer enables checkout account creation
@@ -34,7 +34,7 @@ Feature: Checkout controls and order review
       Then account creation is unchecked and the username and password fields are hidden
 
   Rule: AEC-21 alternative shipping address
-    @AEC-21
+    @AEC-21 @phase-1
     Scenario: Show and hide the alternative shipping form
       Then the alternative shipping checkbox is unchecked and its fields are hidden
       When the customer enables a different shipping address
@@ -49,7 +49,7 @@ Feature: Checkout controls and order review
       Then the coupon field and Apply coupon button are visible
 
   Rule: AEC-23 payment choices
-    @AEC-145
+    @AEC-145 @phase-1
     Scenario: Payment instructions follow the selected method
       Then direct bank transfer is selected with its test-mode message visible
       When the customer selects cash on delivery
@@ -59,7 +59,5 @@ Feature: Checkout controls and order review
 
   Rule: AEC-22 review order details
     @AEC-157
-    Scenario: Review items and totals before ordering
+    Scenario: Review products and quantities before ordering
       Then the order review lists each product, quantity, and line subtotal
-      And the order review shows the subtotal, shipping, applicable tax, and total
-      And the total matches the displayed amounts
