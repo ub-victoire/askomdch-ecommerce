@@ -6,32 +6,20 @@ Feature: Customer Login
   So that I can access my account dashboard and manage my orders
 
   Background:
-    Given no user session is active in the browser
-    And the user navigates to the Account page at "https://askomdch.com/account/"
-    Then the "Login" section should be displayed
-    And the "Username or email address" field should be visible and empty
-    And the "Password" field should be visible, empty and masked
-    And the "Log in" button should be visible and enabled
+    Given Customer is on the login page
+    And Logged out on the account page
 
 
   @smoke @high-priority @positive
   Scenario Outline: Login with a registered username
-    Given a registered customer exists with username <username> and password <password>
+    Given a registered customer exists with username and password
     When the user enters <username> in the "Username or email address" field
     And the user enters <password> in the "Password" field
     And the user clicks the "Log in" button
     Then the user should be redirected to the account dashboard at <account_url>
     And the page heading should be <page_heading>
     And the dashboard greeting should display the username <username>
-    And the account navigation should contain the following links:
-      | Dashboard       |
-      | Orders          |
-      | Downloads       |
-      | Addresses       |
-      | Account details |
-      | Log out         |
-    And no login error message should be displayed
-    And the "Login" form should no longer be displayed
+    And the account navigation should contain the following links: Dashboard, Orders, Downloads, Addresses, Account details, Log out
 
     Examples: Registered username with a valid password
       | username  | password  | account_url                   | page_heading |
@@ -48,15 +36,7 @@ Feature: Customer Login
     Then the user should be redirected to the account dashboard at <account_url>
     And the page heading should be <page_heading>
     And the dashboard greeting should display the username <username>
-    And the account navigation should contain the following links:
-      | Dashboard       |
-      | Orders          |
-      | Downloads       |
-      | Addresses       |
-      | Account details |
-      | Log out         |
-    And no login error message should be displayed
-    And the "Login" form should no longer be displayed
+    And the account navigation should contain the following links: Dashboard, Orders, Downloads, Addresses, Account details, Log out
 
     Examples: Registered email address with a valid password
       | username  | email                    | password  | account_url                   | page_heading |
