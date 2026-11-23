@@ -1,4 +1,4 @@
-Feature: Returning customer checkout authentication
+Feature: Returning customer checkout login
 
   Background:
     Given the customer has a fresh browser session
@@ -11,12 +11,12 @@ Feature: Returning customer checkout authentication
   Rule: AEC-17 registered customer login
     @AEC-71
     Scenario: Log in using a registered username
-      When the customer logs in with its "username" as <Test> and matching "password" as <test@123!>
+      When the customer logs in with the test account's registered username and password
       Then the customer is logged in on checkout
       And the returning customer banner is hidden
 
     @AEC-73
     Scenario: Log in using a registered email address
-      When the customer logs in with its "email" as <test.test.com> address and matching "password" as <test@123!>
+      When the customer logs in with the test account's registered email address and password
       Then the customer is logged in on checkout
       And the returning customer banner is hidden

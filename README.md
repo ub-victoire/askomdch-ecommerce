@@ -23,12 +23,19 @@ automation/
 └── features/
     ├── AccountManagement/  # Login and password reset
     ├── cart_management/    # Cart operations
-    ├── checkout/           # Checkout, authentication, and orders
+    ├── checkout/           # Checkout, payment, validation, and recovery
     └── product_browsing/   # Search and product details
 ```
 
 Each `.feature` file groups related behavior into a Gherkin `Feature`, with
 scenarios and, where useful, scenario outlines and example tables.
+Checkout scenarios keep synthetic values in their feature files, including
+`Examples` tables. Credentials and valid coupon codes must be provisioned in
+the approved test environment; do not add real account or payment details to
+this repository. Scenarios marked `@pending` need test-environment setup or
+validation before they can be run.
+Checkout scenarios use `@phase-1` through `@phase-4` tags to match the
+prioritized test plan.
 
 ## Getting started
 
